@@ -41,7 +41,5 @@ func part2() int {
 }
 
 func main() {
-	ans1 := part1()
-	ans2 := part2()
-	println(ans1, ans2)
+	util.Run(part1, part2)
 }

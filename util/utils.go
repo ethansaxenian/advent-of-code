@@ -7,6 +7,22 @@ import (
 	"strings"
 )
 
+func Run(part1, part2 func() int) {
+	part := 1
+	if len(os.Args) >= 2 {
+		part = ToInt(os.Args[1])
+	}
+
+	var ans any
+	if part == 1 {
+		ans = part1()
+	} else {
+		ans = part2()
+	}
+
+	fmt.Println(ans)
+}
+
 func ReadInput(day int) []string {
 	data, err := os.ReadFile(fmt.Sprintf("day%d/input.txt", day))
 	if err != nil {

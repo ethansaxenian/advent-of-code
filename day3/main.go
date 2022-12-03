@@ -17,16 +17,11 @@ func part1() int {
 	for _, sack := range rucksacks {
 		letters := strings.Split(sack, "")
 		l := len(letters)
-		l1 := letters[0 : l/2]
-		l2 := letters[l/2 : l]
+		set1 := set.NewSetFromIterable(letters[0 : l/2])
+		set2 := set.NewSetFromIterable(letters[l/2 : l])
 
-		set1 := set.NewSetFromIterable(l1)
-		set2 := set.NewSetFromIterable(l2)
-
-		for _, c := range set1.Items() {
-			if set2.Contains(c) {
-				total += strings.Index(alphabet, c)
-			}
+		for _, c := range set.Union(set1, set2).Items() {
+			total += strings.Index(alphabet, c)
 		}
 
 	}
@@ -42,10 +37,8 @@ func part2() int {
 		set2 := set.NewSetFromString(rucksacks[i+1])
 		set3 := set.NewSetFromString(rucksacks[i+2])
 
-		for _, c := range set1.Items() {
-			if set2.Contains(c) && set3.Contains(c) {
-				total += strings.Index(alphabet, c)
-			}
+		for _, c := range set.Union(set1, set2, set3).Items() {
+			total += strings.Index(alphabet, c)
 		}
 	}
 

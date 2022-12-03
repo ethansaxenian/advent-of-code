@@ -26,8 +26,12 @@ func (s Set[T]) Items() []T {
 	return items
 }
 
+func NewEmptySet[T comparable]() Set[T] {
+	return Set[T]{contents: map[T]struct{}{}}
+}
+
 func NewSetFromIterable[T comparable](iterable []T) Set[T] {
-	s := Set[T]{contents: map[T]struct{}{}}
+	s := NewEmptySet[T]()
 	for _, item := range iterable {
 		s.Add(item)
 	}
@@ -36,9 +40,30 @@ func NewSetFromIterable[T comparable](iterable []T) Set[T] {
 }
 
 func NewSetFromString(s string) Set[string] {
-	set := Set[string]{contents: map[string]struct{}{}}
+	set := NewEmptySet[string]()
 	for _, c := range s {
 		set.Add(string(c))
 	}
 	return set
+}
+
+func Union[T comparable](sets ...Set[T]) Set[T] {
+	union := NewEmptySet[T]()
+
+	for _, i := range sets[0].Items() {
+		inAllSets := true
+
+		for _, s := range sets[1:] {
+			if !s.Contains(i) {
+				inAllSets = false
+				break
+			}
+		}
+
+		if inAllSets {
+			union.Add(i)
+		}
+	}
+
+	return union
 }

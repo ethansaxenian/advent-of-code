@@ -2,9 +2,13 @@ package util
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func Run(part1, part2 func() int) {
@@ -23,13 +27,33 @@ func Run(part1, part2 func() int) {
 	fmt.Println(ans)
 }
 
-func ReadInput(day int) []string {
-	data, err := os.ReadFile(fmt.Sprintf("day%d/input.txt", day))
+func FetchInput(day int) []string {
+	url := fmt.Sprintf("https://adventofcode.com/2022/day/%d/input", day)
+	client := &http.Client{}
+	_, err := client.Get(url)
 	if err != nil {
 		panic(err)
 	}
 
-	return strings.Split(string(data), "\n")
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	cookieHeader := fmt.Sprintf("session=%s", os.Getenv("AOC_COOKIE"))
+	req.Header.Add("cookie", cookieHeader)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	return strings.Split(string(body), "\n")
 }
 
 func Sum(nums []int) int {

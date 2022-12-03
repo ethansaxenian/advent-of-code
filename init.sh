@@ -23,6 +23,3 @@ func part2() int {
 func main() {
 	util.Run(part1, part2)
 }" > "day${DAY}/main.go"
-
-source .env
-curl "https://adventofcode.com/2022/day/${DAY}/input" -H "cookie: session=${COOKIE}" -o "day${DAY}/input.txt" 2>/dev/null

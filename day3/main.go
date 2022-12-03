@@ -7,7 +7,7 @@ import (
 	"github.com/ethansaxenian/advent-of-code-2022/util"
 )
 
-var rucksacks = util.ReadInput(3)
+var rucksacks = util.FetchInput(3)
 
 var alphabet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 

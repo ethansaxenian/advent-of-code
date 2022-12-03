@@ -6,7 +6,7 @@ import (
 	"github.com/ethansaxenian/advent-of-code-2022/util"
 )
 
-var rounds = util.ReadInput(2)
+var rounds = util.FetchInput(2)
 
 func part1() int {
 	m := map[rune]rune{

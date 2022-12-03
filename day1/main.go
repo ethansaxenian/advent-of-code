@@ -7,7 +7,7 @@ import (
 )
 
 func part1() int {
-	lines := util.ReadInput(1)
+	lines := util.FetchInput(1)
 	max := 0
 	curr := 0
 	for _, line := range lines {
@@ -25,7 +25,7 @@ func part1() int {
 }
 
 func part2() int {
-	lines := util.ReadInput(1)
+	lines := util.FetchInput(1)
 	calories := make([]int, 0)
 	curr := 0
 	for _, line := range lines {

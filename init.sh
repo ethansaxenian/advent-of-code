@@ -10,7 +10,7 @@ import (
 	\"github.com/ethansaxenian/advent-of-code-2022/util\"
 )
 
-var rucksacks = util.ReadInput(${DAY})
+var rucksacks = util.FetchInput(${DAY})
 
 func part1() int {
 	return 0

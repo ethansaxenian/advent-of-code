@@ -47,8 +47,8 @@ func NewSetFromString(s string) Set[string] {
 	return set
 }
 
-func Union[T comparable](sets ...Set[T]) Set[T] {
-	union := NewEmptySet[T]()
+func Intersection[T comparable](sets ...Set[T]) Set[T] {
+	intersection := NewEmptySet[T]()
 
 	for _, i := range sets[0].Items() {
 		inAllSets := true
@@ -61,9 +61,9 @@ func Union[T comparable](sets ...Set[T]) Set[T] {
 		}
 
 		if inAllSets {
-			union.Add(i)
+			intersection.Add(i)
 		}
 	}
 
-	return union
+	return intersection
 }

@@ -20,7 +20,7 @@ func part1() int {
 		set1 := set.NewSetFromIterable(letters[0 : l/2])
 		set2 := set.NewSetFromIterable(letters[l/2 : l])
 
-		for _, c := range set.Union(set1, set2).Items() {
+		for _, c := range set.Intersection(set1, set2).Items() {
 			total += strings.Index(alphabet, c)
 		}
 
@@ -37,7 +37,7 @@ func part2() int {
 		set2 := set.NewSetFromString(rucksacks[i+1])
 		set3 := set.NewSetFromString(rucksacks[i+2])
 
-		for _, c := range set.Union(set1, set2, set3).Items() {
+		for _, c := range set.Intersection(set1, set2, set3).Items() {
 			total += strings.Index(alphabet, c)
 		}
 	}

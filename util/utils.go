@@ -30,10 +30,6 @@ func Run(part1, part2 func() int) {
 func FetchInput(day int) []string {
 	url := fmt.Sprintf("https://adventofcode.com/2022/day/%d/input", day)
 	client := &http.Client{}
-	_, err := client.Get(url)
-	if err != nil {
-		panic(err)
-	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

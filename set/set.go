@@ -1,25 +1,23 @@
 package set
 
-type Set[T comparable] struct {
-	contents map[T]struct{}
-}
+type Set[T comparable] map[T]struct{}
 
 func (s Set[T]) Add(item T) {
-	s.contents[item] = struct{}{}
+	s[item] = struct{}{}
 }
 
 func (s Set[T]) Remove(item T) {
-	delete(s.contents, item)
+	delete(s, item)
 }
 
 func (s Set[T]) Contains(item T) bool {
-	_, ok := s.contents[item]
+	_, ok := s[item]
 	return ok
 }
 
 func (s Set[T]) Items() []T {
-	items := []T{}
-	for k := range s.contents {
+	items := make([]T, 0, len(s))
+	for k := range s {
 		items = append(items, k)
 	}
 
@@ -27,7 +25,7 @@ func (s Set[T]) Items() []T {
 }
 
 func NewEmptySet[T comparable]() Set[T] {
-	return Set[T]{contents: map[T]struct{}{}}
+	return map[T]struct{}{}
 }
 
 func NewSetFromIterable[T comparable](iterable []T) Set[T] {

@@ -17,8 +17,8 @@ func part1() int {
 	for _, sack := range rucksacks {
 		letters := strings.Split(sack, "")
 		l := len(letters)
-		set1 := set.NewSetFromIterable(letters[0 : l/2])
-		set2 := set.NewSetFromIterable(letters[l/2 : l])
+		set1 := set.NewSetFromIterable(letters[:l/2])
+		set2 := set.NewSetFromIterable(letters[l/2:])
 
 		for _, c := range set.Intersection(set1, set2).Items() {
 			total += strings.Index(alphabet, c)

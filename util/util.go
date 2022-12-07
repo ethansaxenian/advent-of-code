@@ -11,7 +11,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func Run(part1, part2 func() int) {
+func Run[T comparable](part1, part2 func() T) {
 	part := 1
 	if len(os.Args) >= 2 {
 		part = ToInt(os.Args[1])
@@ -49,7 +49,8 @@ func FetchInput(day int) []string {
 		panic(err)
 	}
 
-	return strings.Split(string(body), "\n")
+	lines := strings.Split(string(body), "\n")
+	return lines[:len(lines)-1]
 }
 
 func Sum(nums []int) int {

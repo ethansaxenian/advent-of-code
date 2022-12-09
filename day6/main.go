@@ -30,13 +30,13 @@ func part1() int {
 			counter[input[i]] -= 1
 		}
 
-		counter[input[j]] += 1
+		counter[input[j]]++
 
 		if len(counter) == 4 {
 			return j + 1
 		}
-		i += 1
-		j += 1
+		i++
+		j++
 	}
 	return 0
 }
@@ -52,14 +52,14 @@ func part2() int {
 			counter[input[i]] -= 1
 		}
 
-		counter[input[j]] += 1
+		counter[input[j]]++
 
 		if len(counter) == 14 {
 			return j + 1
 		}
 
-		i += 1
-		j += 1
+		i++
+		j++
 	}
 	return 0
 }

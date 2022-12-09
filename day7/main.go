@@ -47,7 +47,7 @@ func buildFilesystem() *node {
 		parts := strings.Split(inputLines[i], " ")
 		if parts[0] == "$" {
 			if parts[1] == "ls" {
-				i += 1
+				i++
 				for i < len(inputLines) {
 					fileParts := strings.Split(inputLines[i], " ")
 					if fileParts[0] == "$" {
@@ -55,7 +55,7 @@ func buildFilesystem() *node {
 					}
 
 					me.children = append(me.children, getNodeFromParts(fileParts, me))
-					i += 1
+					i++
 				}
 
 			} else if parts[1] == "cd" {
@@ -71,7 +71,7 @@ func buildFilesystem() *node {
 					}
 				}
 
-				i += 1
+				i++
 			}
 		} else {
 			fmt.Println("SOMETHING WENT REALLY WRONG")

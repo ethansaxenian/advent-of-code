@@ -26,7 +26,7 @@ func part1() int {
 		min1, max1, min2, max2 := processAssignments(assignments)
 
 		if min1 <= min2 && max1 >= max2 || min2 <= min1 && max2 >= max1 {
-			total += 1
+			total++
 		}
 	}
 
@@ -43,7 +43,7 @@ func part2() int {
 		min1, max1, min2, max2 := processAssignments(assignments)
 
 		if min2 <= max1 && max2 >= min1 || min1 <= max2 && max1 >= min2 {
-			total += 1
+			total++
 		}
 	}
 

@@ -75,3 +75,12 @@ func Abs(x int) int {
 	}
 	return x
 }
+
+func Contains[T comparable](list []T, item T) bool {
+	for _, x := range list {
+		if x == item {
+			return true
+		}
+	}
+	return false
+}

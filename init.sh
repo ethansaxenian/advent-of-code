@@ -2,6 +2,11 @@
 
 DAY=$1
 
+if [[ -d "day${DAY} "]]; then
+	echo "Day ${DAY} already exists"
+	exit 1
+fi
+
 mkdir "day${DAY}"
 
 echo "package main

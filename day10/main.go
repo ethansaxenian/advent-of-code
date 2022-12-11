@@ -9,10 +9,8 @@ import (
 
 var inputLines = util.FetchInput(10)
 
-var interestingCycles = []int{20, 60, 100, 140, 180, 220}
-
 func addInterestingSignalStrength(cycle, register int) int {
-	if util.Contains(interestingCycles, cycle) {
+	if util.Contains([]int{20, 60, 100, 140, 180, 220}, cycle) {
 		return cycle * register
 	}
 	return 0
@@ -51,7 +49,6 @@ func draw(cycle int, sprite [3]int) {
 	} else {
 		fmt.Print(".")
 	}
-	// fmt.Print(cycle)
 
 	if pos == 40 {
 		fmt.Println()

@@ -33,24 +33,25 @@ func buildCave(addFloor bool) ([][]bool, int, int, int) {
 		paths = append(paths, rockPathEndpoints)
 	}
 
+	var caveWidth int
+	if addFloor {
+		caveWidth = 700
+	} else {
+		caveWidth = cMax + 1
+	}
+
 	cave := [][]bool{}
 	for i := 0; i <= rMax+1; i++ {
 		row := []bool{}
-		if addFloor {
-			for j := -100000; j <= 100000; j++ {
-				row = append(row, true)
-			}
-		} else {
-			for j := 0; j <= cMax+1; j++ {
-				row = append(row, true)
-			}
+		for j := 0; j <= caveWidth; j++ {
+			row = append(row, true)
 		}
 		cave = append(cave, row)
 	}
 
 	if addFloor {
 		row := []bool{}
-		for j := -100000; j <= 100000; j++ {
+		for j := 0; j <= caveWidth; j++ {
 			row = append(row, false)
 		}
 		cave = append(cave, row)
@@ -145,6 +146,8 @@ func part1() int {
 			sand = newPos
 		}
 	}
+
+	printCave(cMin, cMax, cave)
 
 	return grains
 }

@@ -105,11 +105,12 @@ func printChamber(chamber [][7]bool, t int) {
 }
 
 func part1() int {
-	chamber := buildChamber(2022)
+	totalNumRocks := 2022
+	chamber := buildChamber(totalNumRocks)
 	tallestRock := 0
 	numRocks := 0
 	j := 0
-	for numRocks < 2022 {
+	for numRocks < totalNumRocks {
 		for _, r := range rocks {
 			rock := getNewRock(tallestRock+4, r)
 			for {
@@ -123,7 +124,7 @@ func part1() int {
 				}
 			}
 			numRocks++
-			if numRocks >= 2022 {
+			if numRocks >= totalNumRocks {
 				break
 			}
 		}

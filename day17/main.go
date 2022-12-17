@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/ethansaxenian/advent-of-code-2022/util"
 )
 
@@ -88,19 +86,6 @@ func getHighestRock(rock []point) int {
 func insertRock(rock []point, chamber [][7]bool) {
 	for _, p := range rock {
 		chamber[p.r][p.c] = true
-	}
-}
-
-func printChamber(chamber [][7]bool, bottom int) {
-	for i := len(chamber) - 1; i >= bottom; i-- {
-		for _, r := range chamber[i] {
-			if r {
-				fmt.Print("#")
-			} else {
-				fmt.Print(".")
-			}
-		}
-		fmt.Println()
 	}
 }
 

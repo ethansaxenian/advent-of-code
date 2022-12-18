@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"os"
 	"strconv"
@@ -85,16 +86,22 @@ func Contains[T comparable](list []T, item T) bool {
 	return false
 }
 
-func Max(a, b int) int {
-	if a > b {
-		return a
+func Max(ints ...int) int {
+	m := math.MinInt
+	for _, i := range ints {
+		if i > m {
+			m = i
+		}
 	}
-	return b
+	return m
 }
 
-func Min(a, b int) int {
-	if a < b {
-		return a
+func Min(ints ...int) int {
+	m := math.MaxInt
+	for _, i := range ints {
+		if i < m {
+			m = i
+		}
 	}
-	return b
+	return m
 }

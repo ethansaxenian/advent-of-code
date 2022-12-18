@@ -65,3 +65,15 @@ func Intersection[T comparable](sets ...Set[T]) Set[T] {
 
 	return intersection
 }
+
+func Union[T comparable](sets ...Set[T]) Set[T] {
+	union := NewEmptySet[T]()
+
+	for _, s := range sets {
+		for _, i := range s.Items() {
+			union.Add(i)
+		}
+	}
+
+	return union
+}

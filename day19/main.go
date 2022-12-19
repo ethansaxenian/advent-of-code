@@ -97,7 +97,8 @@ func bfs(bp blueprint, curr state, cache map[state]int) int {
 		} else {
 
 			// build a clay robot
-			if curr.ore >= bp.clayCost {
+			canBuildClayRobot := curr.ore >= bp.clayCost
+			if canBuildClayRobot && curr.clayRobots < bp.obsidianCost.clay {
 				s := state{
 					curr.minute - 1,
 					curr.oreRobots,
@@ -113,8 +114,8 @@ func bfs(bp blueprint, curr state, cache map[state]int) int {
 			}
 
 			// build an ore robot
-			canBuildOreRobot := curr.ore >= bp.oreCost
-			if canBuildOreRobot && curr.oreRobots < bp.clayCost {
+			canBuildOreRobot := curr.ore >= bp.clayCost
+			if canBuildOreRobot && curr.oreRobots < util.Max(bp.geodeCost.ore, bp.obsidianCost.ore, bp.clayCost, bp.oreCost) {
 				s := state{
 					curr.minute - 1,
 					curr.oreRobots + 1,
@@ -129,19 +130,21 @@ func bfs(bp blueprint, curr state, cache map[state]int) int {
 				maxGeodes = util.Max(maxGeodes, bfs(bp, s, cache))
 			}
 
-			// don't build new robots
-			s := state{
-				curr.minute - 1,
-				curr.oreRobots,
-				curr.clayRobots,
-				curr.obsidianRobots,
-				curr.geodeRobots,
-				newOre,
-				newClay,
-				newObsidian,
-				newGeodes,
+			if !(canBuildClayRobot || canBuildOreRobot) {
+				// don't build new robots
+				s := state{
+					curr.minute - 1,
+					curr.oreRobots,
+					curr.clayRobots,
+					curr.obsidianRobots,
+					curr.geodeRobots,
+					newOre,
+					newClay,
+					newObsidian,
+					newGeodes,
+				}
+				maxGeodes = util.Max(maxGeodes, bfs(bp, s, cache))
 			}
-			maxGeodes = util.Max(maxGeodes, bfs(bp, s, cache))
 		}
 	}
 

@@ -105,3 +105,11 @@ func Min(ints ...int) int {
 	}
 	return m
 }
+
+func Mod(x, y int) int {
+	m := x % y
+	if m < 0 {
+		m += y
+	}
+	return m
+}

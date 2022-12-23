@@ -1,1 +1,4 @@
-.env
+aoc-cookie.json
+__pycache__/
+.idea/
+venv/

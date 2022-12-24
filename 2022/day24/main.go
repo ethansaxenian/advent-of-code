@@ -20,8 +20,9 @@ var inputLines = util.FetchInput(24)
 
 var rows = len(inputLines)
 var cols = len(inputLines[0])
+var lcm = util.LCM(rows-2, cols-2)
 
-func buildGrid() ([]blizzard, set.Set[point]) {
+func getBlizzardsAndWalls() ([]blizzard, set.Set[point]) {
 	walls := set.NewEmptySet[point]()
 	blizzards := []blizzard{}
 	for r, row := range inputLines {
@@ -34,6 +35,18 @@ func buildGrid() ([]blizzard, set.Set[point]) {
 		}
 	}
 	return blizzards, walls
+}
+
+func preprocessBlizzards(blizzards []blizzard) map[int]set.Set[point] {
+	blizzardMap := map[int]set.Set[point]{}
+
+	for i := 0; i < lcm; i++ {
+		newBlizzards, occupied := getNextBlizzards(blizzards)
+		blizzards = newBlizzards
+		blizzardMap[i] = occupied
+	}
+
+	return blizzardMap
 }
 
 func getNextBlizzards(blizzards []blizzard) ([]blizzard, set.Set[point]) {
@@ -73,58 +86,75 @@ func getNextBlizzPos(blizzard blizzard) point {
 }
 
 type state struct {
-	pos       point
-	time      int
-	blizzards []blizzard
+	pos  point
+	time int
 }
 
-func bfs(start, end point, initTime int, initBlizzards []blizzard, walls set.Set[point]) (int, []blizzard) {
+func bfs(start, end point, initTime int, blizzardMap map[int]set.Set[point], walls set.Set[point]) int {
 	vis := set.NewEmptySet[[3]int]()
 	vis.Add([3]int{start.r, start.c, initTime})
 
-	q := []state{{start, initTime, initBlizzards}}
+	q := []state{{start, initTime}}
 
 	for len(q) > 0 {
 		s := q[0]
 		q = q[1:]
 
 		if s.pos == end {
-			return s.time, s.blizzards
+			return s.time
 		}
 
-		newBlizzards, occupied := getNextBlizzards(s.blizzards)
+		occupied := blizzardMap[s.time%lcm]
 
 		for _, dir := range [][2]int{{0, 0}, {1, 0}, {0, 1}, {-1, 0}, {0, -1}} {
 			nextPos := point{s.pos.r + dir[0], s.pos.c + dir[1]}
 			nextVis := [3]int{nextPos.r, nextPos.c, s.time + 1}
 			if nextPos.r >= 0 && nextPos.r < rows && !walls.Contains(nextPos) && !occupied.Contains(nextPos) && !vis.Contains(nextVis) {
 				vis.Add(nextVis)
-				q = append(q, state{nextPos, s.time + 1, newBlizzards})
+				q = append(q, state{nextPos, s.time + 1})
 			}
 		}
 
 	}
-	return math.MaxInt, []blizzard{}
+	return math.MaxInt
 }
 
 func part1() int {
-	blizzards, walls := buildGrid()
+	blizzards, walls := getBlizzardsAndWalls()
+	blizzardMap := preprocessBlizzards(blizzards)
+
 	start := point{0, 1}
 	end := point{rows - 1, cols - 2}
-	time, _ := bfs(start, end, 0, blizzards, walls)
 
-	return time
+	return bfs(start, end, 0, blizzardMap, walls)
 }
 
 func part2() int {
-	blizzards, walls := buildGrid()
+	blizzards, walls := getBlizzardsAndWalls()
+	blizzardMap := preprocessBlizzards(blizzards)
+
 	start := point{0, 1}
 	end := point{rows - 1, cols - 2}
 
-	t1, nextBlizzards := bfs(start, end, 0, blizzards, walls)
-	t2, nextBlizzards := bfs(end, start, t1, nextBlizzards, walls)
-	t3, _ := bfs(start, end, t2, nextBlizzards, walls)
-	return t3
+	return bfs(
+		start,
+		end,
+		bfs(
+			end,
+			start,
+			bfs(
+				start,
+				end,
+				0,
+				blizzardMap,
+				walls,
+			),
+			blizzardMap,
+			walls,
+		),
+		blizzardMap,
+		walls,
+	)
 }
 
 func main() {

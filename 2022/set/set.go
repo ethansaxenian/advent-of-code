@@ -1,5 +1,7 @@
 package set
 
+import "fmt"
+
 type Set[T comparable] map[T]struct{}
 
 func (s Set[T]) Add(item T) {
@@ -22,6 +24,10 @@ func (s Set[T]) Items() []T {
 	}
 
 	return items
+}
+
+func (s Set[T]) Print() {
+	fmt.Println(s.Items())
 }
 
 func NewEmptySet[T comparable]() Set[T] {

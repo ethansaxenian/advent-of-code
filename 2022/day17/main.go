@@ -12,8 +12,6 @@ var inputLines = util.FetchInput(17)
 
 var jetPattern = inputLines[0]
 
-// var jetPattern = ">>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>"
-
 var rocks = [][]point{
 	{{0, 0}, {1, 0}, {2, 0}, {3, 0}},
 	{{0, 1}, {1, 0}, {1, 1}, {1, 2}, {2, 1}},

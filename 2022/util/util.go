@@ -29,17 +29,14 @@ func Run[T comparable](part1, part2 func() T) {
 	fmt.Println(ans)
 }
 
+type session struct {
+	Cookie string `json:"aoc_cookie"`
+}
+
 func FetchInput(day int) []string {
 	_, filename, _, _ := runtime.Caller(0)
 	cookiePath := filepath.Join(filename, "../../../aoc-cookie.json")
 	data, err := os.ReadFile(cookiePath)
-	if err != nil {
-		panic(err)
-	}
-
-	var env map[string]interface{}
-
-	err = json.Unmarshal(data, &env)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +49,14 @@ func FetchInput(day int) []string {
 		panic(err)
 	}
 
-	cookieHeader := fmt.Sprintf("session=%s", env["AOC_COOKIE"])
+	var session session
+
+	err = json.Unmarshal(data, &session)
+	if err != nil {
+		panic(err)
+	}
+
+	cookieHeader := fmt.Sprintf("session=%s", session.Cookie)
 	req.Header.Add("cookie", cookieHeader)
 
 	resp, err := client.Do(req)

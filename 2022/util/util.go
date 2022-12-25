@@ -133,18 +133,6 @@ func Mod(x, y int) int {
 	return m
 }
 
-/*
-def gcd(a, b):
-    """Return greatest common divisor using Euclid's Algorithm."""
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    """Return lowest common multiple."""
-    return a * b // gcd(a, b)
-*/
-
 func GCD(a, b int) int {
 	for b > 0 {
 		a, b = b, a%b
@@ -154,4 +142,15 @@ func GCD(a, b int) int {
 
 func LCM(a, b int) int {
 	return a * b / GCD(a, b)
+}
+
+func Pow(a, b int) int {
+	if b == 0 {
+		return 1
+	}
+	ans := 1
+	for i := 0; i < b; i++ {
+		ans *= a
+	}
+	return ans
 }

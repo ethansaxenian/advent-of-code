@@ -80,3 +80,12 @@ func ToInt(s string) int {
 
 	return i
 }
+
+func Contains(sl []string, el string) bool {
+	for _, s := range sl {
+		if s == el {
+			return true
+		}
+	}
+	return false
+}

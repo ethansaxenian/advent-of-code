@@ -6,16 +6,7 @@ import (
 
 var inputLines = util.FetchInput(1)
 
-// var inputLines = []string{
-// 	"1721",
-// 	"979",
-// 	"366",
-// 	"299",
-// 	"675",
-// 	"1456",
-// }
-
-var sum = 2020
+const sum = 2020
 
 func toInts(slice []string) []int {
 	ints := make([]int, len(slice))

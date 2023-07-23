@@ -11,9 +11,7 @@ mkdir "day${DAY}"
 
 echo "package main
 
-import (
-	\"github.com/ethansaxenian/advent-of-code/2022/util\"
-)
+import \"aoc2020/util\"
 
 var inputLines = util.FetchInput(${DAY})
 

@@ -1,9 +1,10 @@
 package main
 
 import (
-	"aoc2020/util"
 	"fmt"
 	"sort"
+
+	"github.com/ethansaxenian/advent-of-code/2020/util"
 )
 
 var _ = fmt.Printf

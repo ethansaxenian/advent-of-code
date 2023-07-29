@@ -1,8 +1,6 @@
 package main
 
-import (
-	"aoc2020/util"
-)
+import "github.com/ethansaxenian/advent-of-code/2020/util"
 
 var inputLines = util.FetchInput(3)
 

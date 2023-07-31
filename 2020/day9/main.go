@@ -1,8 +1,7 @@
 package main
 
 import (
-	"errors"
-	"sort"
+	"math"
 
 	"github.com/ethansaxenian/advent-of-code/2020/util"
 )
@@ -50,30 +49,33 @@ func part1() int {
 	return 0
 }
 
-func findSubarray(i, target int) ([]int, error) {
-	sum := 0
-	for j := i; j < len(inputLines); j++ {
-		sum += inputLines[j]
-		if sum == target {
-			return inputLines[i : j+1], nil
-		}
-		if sum > target {
-			return []int{}, errors.New("no subarray")
-		}
-	}
-	return []int{}, errors.New("no subarray")
-}
-
 func part2() int {
 	target := part1()
-	for i := range inputLines {
-		sub, err := findSubarray(i, target)
-		if err == nil {
-			sort.Ints(sub)
-			return sub[0] + sub[len(sub)-1]
+	sum := inputLines[0]
+	i := 0
+	j := 0
+	for sum != target {
+		if sum < target {
+			j++
+			sum += inputLines[j]
+		} else if sum > target {
+			sum -= inputLines[i]
+			i++
 		}
 	}
-	return 0
+
+	max, min := 0, math.MaxInt64
+	for i <= j {
+		n := inputLines[i]
+		if n < min {
+			min = n
+		}
+		if n > max {
+			max = n
+		}
+		i++
+	}
+	return min + max
 }
 
 func main() {

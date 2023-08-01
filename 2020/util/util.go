@@ -98,3 +98,11 @@ func Contains(sl []string, el string) bool {
 	}
 	return false
 }
+
+func Mod(x, y int) int {
+	m := x % y
+	if m < 0 {
+		m += y
+	}
+	return m
+}

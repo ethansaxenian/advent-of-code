@@ -72,6 +72,15 @@ func FetchInput(day int) []string {
 	return lines[:len(lines)-1]
 }
 
+func FetchInputInts(day int) []int {
+	input := FetchInput(day)
+	ints := []int{}
+	for _, n := range input {
+		ints = append(ints, ToInt(n))
+	}
+	return ints
+}
+
 func ToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {

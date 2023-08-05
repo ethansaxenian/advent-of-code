@@ -106,3 +106,11 @@ func Mod(x, y int) int {
 	}
 	return m
 }
+
+func Map[T any, U any](f func(T) U, iterable []T) []U {
+	newIterable := []U{}
+	for _, e := range iterable {
+		newIterable = append(newIterable, f(e))
+	}
+	return newIterable
+}

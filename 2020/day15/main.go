@@ -15,7 +15,12 @@ type num struct {
 }
 
 func solve(turns int) int {
-	counter := map[int]num{}
+
+	counter := []num{}
+	for i := 0; i <= turns; i++ {
+		counter = append(counter, num{-1, -1, -1})
+	}
+
 	starting := strings.Split(inputLines[0], ",")
 
 	for i, n := range starting {
@@ -32,8 +37,8 @@ func solve(turns int) int {
 			counter[last] = num{counter[last].first, turn, counter[last].last}
 		} else {
 			last = n.last - n.prev
-			_, ok := counter[last]
-			if ok {
+			n := counter[last]
+			if n.first != -1 {
 				counter[last] = num{counter[last].first, turn, counter[last].last}
 			} else {
 				counter[last] = num{turn, turn, turn}

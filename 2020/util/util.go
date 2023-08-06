@@ -90,7 +90,7 @@ func ToInt(s string) int {
 	return i
 }
 
-func Contains(sl []string, el string) bool {
+func Contains[T comparable](sl []T, el T) bool {
 	for _, s := range sl {
 		if s == el {
 			return true

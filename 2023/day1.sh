@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-source .env
+SESSION_COOKIE=$(jq -r .aoc_cookie < "../aoc-cookie.json")
 
 puzzle_input=$(curl \
   "https://adventofcode.com/2023/day/1/input" \

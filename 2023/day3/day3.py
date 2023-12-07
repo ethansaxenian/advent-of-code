@@ -1,22 +1,7 @@
-from pathlib import Path
-from urllib.request import Request, urlopen
-import json
 from dataclasses import dataclass, field
+from util.util import fetch_input
 
-url = "https://adventofcode.com/2023/day/3/input"
-
-curr_dir = Path(__file__).parent
-with open(f"{curr_dir.parent.parent / 'aoc-cookie.json'}") as f:
-    cookie = json.load(f)["aoc_cookie"]
-
-
-req = Request(url)
-req.add_header("Cookie", f"session={cookie}")
-
-with urlopen(req) as response:
-    puzzle_input = response.read().decode("utf-8")
-
-rows = puzzle_input.split("\n")
+rows = fetch_input(3)
 
 Coord = tuple[int, int]
 

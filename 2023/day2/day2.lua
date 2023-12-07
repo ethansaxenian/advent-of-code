@@ -2,6 +2,7 @@ local http = require("socket.http")
 local ltn12 = require("ltn12")
 local json = require("lunajson")
 
+
 local file = io.open("../aoc-cookie.json", "rb")
 if not file then return nil end
 local json_string = file:read("*a")

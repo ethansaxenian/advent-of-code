@@ -1,10 +1,12 @@
+from pathlib import Path
 from urllib.request import Request, urlopen
 import json
 from dataclasses import dataclass, field
 
 url = "https://adventofcode.com/2023/day/3/input"
 
-with open("../aoc-cookie.json") as f:
+curr_dir = Path(__file__).parent
+with open(f"{curr_dir.parent.parent / 'aoc-cookie.json'}") as f:
     cookie = json.load(f)["aoc_cookie"]
 
 

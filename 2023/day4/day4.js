@@ -1,4 +1,4 @@
-const { aoc_cookie } = require("../aoc-cookie.json");
+const { aoc_cookie } = require("../../aoc-cookie.json");
 
 async function fetchInput() {
   const headers = new Headers({

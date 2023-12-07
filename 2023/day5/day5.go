@@ -3,23 +3,13 @@ package main
 import (
 	"fmt"
 	"math"
-	"strconv"
 	"strings"
 
 	"github.com/ethansaxenian/advent-of-code/2023/util"
 )
 
-func StrListToInts(strList []string) []int {
-	intList := []int{}
-	for _, s := range strList {
-		i, _ := strconv.Atoi(s)
-		intList = append(intList, i)
-	}
-	return intList
-}
-
 func parseInput(lines []string) ([]int, [][3]int, [][3]int, [][3]int, [][3]int, [][3]int, [][3]int, [][3]int) {
-	seeds := StrListToInts(strings.Split(lines[0], " ")[1:])
+	seeds := util.StrListToInts(strings.Split(lines[0], " ")[1:])
 
 	m := map[string][][3]int{}
 	var curr string
@@ -34,7 +24,7 @@ func parseInput(lines []string) ([]int, [][3]int, [][3]int, [][3]int, [][3]int, 
 			continue
 		}
 
-		splits := StrListToInts(strings.Split(line, " "))
+		splits := util.StrListToInts(strings.Split(line, " "))
 		d, s, l := splits[0], splits[1], splits[2]
 		m[curr] = append(m[curr], [3]int{s, d, l})
 	}
@@ -98,7 +88,7 @@ func day2(input []string) {
 }
 
 func main() {
-	input := util.FetchInput()
+	input := util.FetchInput(5)
 	day1(input)
 	day2(input)
 }

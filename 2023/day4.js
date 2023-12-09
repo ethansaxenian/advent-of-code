@@ -1,17 +1,4 @@
-const { aoc_cookie } = require("../aoc-cookie.json");
-
-async function fetchInput() {
-  const headers = new Headers({
-    Cookie: `session=${aoc_cookie}`,
-  });
-  const res = await fetch("https://adventofcode.com/2023/day/4/input", {
-    headers,
-  });
-
-  const text = await res.text();
-
-  return text.split("\n").filter((x) => x !== "");
-}
+const { fetchInput } = require("./util/util.js");
 
 function parseLine(line) {
   [left, right] = line.split("|");
@@ -33,7 +20,7 @@ function parseLine(line) {
 
 async function part1() {
   let sum = 0;
-  const puzzleInput = await fetchInput();
+  const puzzleInput = await fetchInput(4);
   for (const line of puzzleInput) {
     const numOverlap = parseLine(line);
 
@@ -44,7 +31,7 @@ async function part1() {
 }
 
 async function part2() {
-  const puzzleInput = await fetchInput();
+  const puzzleInput = await fetchInput(4);
 
   const cards = [];
   for (const line of puzzleInput) {

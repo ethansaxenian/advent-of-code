@@ -3,7 +3,7 @@
 set -euo pipefail
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-SESSION_COOKIE=$(jq -r .aoc_cookie < "../../aoc-cookie.json")
+SESSION_COOKIE=$(jq -r .aoc_cookie < "../aoc-cookie.json")
 
 puzzle_input=$(curl \
   "https://adventofcode.com/2023/day/1/input" \

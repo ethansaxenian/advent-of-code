@@ -14,6 +14,6 @@ def fetch_input(day: int) -> list[str]:
     req.add_header("Cookie", f"session={cookie}")
 
     with urlopen(req) as response:
-        puzzle_input = response.read().decode("utf-8")
+        puzzle_input = response.read().decode("utf-8").strip()
 
     return puzzle_input.split("\n")

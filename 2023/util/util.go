@@ -26,7 +26,7 @@ func FetchInput(day int) []string {
 
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("https://adventofcode.com/2023/day/%x/input", day), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("https://adventofcode.com/2023/day/%d/input", day), nil)
 	if err != nil {
 		panic(err)
 	}
@@ -67,4 +67,42 @@ func StrListToInts(strList []string) []int {
 func StrToInt(str string) int {
 	i, _ := strconv.Atoi(str)
 	return i
+}
+
+func Contains[T comparable](list []T, item T) bool {
+	for _, x := range list {
+		if x == item {
+			return true
+		}
+	}
+	return false
+}
+
+func Combinations[T comparable](list []T, length int) [][]T {
+	if length == 1 {
+		combs := [][]T{}
+		for _, item := range list {
+			combs = append(combs, []T{item})
+		}
+		return combs
+	}
+
+	combs := [][]T{}
+	for i, item := range list {
+		for _, comb := range Combinations[T](list[i+1:], length-1) {
+			combs = append(combs, append([]T{item}, comb...))
+		}
+	}
+	return combs
+}
+
+func Abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func ShortestPath(a, b [2]int) int {
+	return Abs(a[0]-b[0]) + Abs(a[1]-b[1])
 }

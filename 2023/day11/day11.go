@@ -68,7 +68,7 @@ func findGalaxies(grid []string, expansion int) [][2]int {
 	return galaxies
 }
 
-func day1() {
+func part1() {
 	galaxies := findGalaxies(inputLines, 2)
 	combs := util.Combinations[[2]int](galaxies, 2)
 	sum := 0
@@ -78,7 +78,7 @@ func day1() {
 	fmt.Println(sum)
 }
 
-func day2() {
+func part2() {
 	galaxies := findGalaxies(inputLines, 1_000_000)
 	combs := util.Combinations[[2]int](galaxies, 2)
 	sum := 0
@@ -89,6 +89,6 @@ func day2() {
 }
 
 func main() {
-	day1()
-	day2()
+	part1()
+	part2()
 }

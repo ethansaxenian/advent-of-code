@@ -42,7 +42,7 @@ function getFirst(nums) {
   return nums[0] - lists[0][0];
 }
 
-async function day1() {
+async function part1() {
   const input = await fetchInput(9);
   const parsedInput = parseInput(input);
   let sum = 0;
@@ -52,7 +52,7 @@ async function day1() {
   console.log(sum);
 }
 
-async function day2() {
+async function part2() {
   const input = await fetchInput(9);
   const parsedInput = parseInput(input);
   let sum = 0;
@@ -62,5 +62,5 @@ async function day2() {
   console.log(sum);
 }
 
-day1();
-day2();
+part1();
+part2();

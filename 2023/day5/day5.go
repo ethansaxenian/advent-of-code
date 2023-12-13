@@ -42,7 +42,7 @@ func convertNumber(num int, m [][3]int) int {
 	return num
 }
 
-func day1(input []string) {
+func part1(input []string) {
 	seeds, seedToSoil, soilToFertilizer, fertilizerToWater, waterToLight, lightToTemperature, temperatureToHumidity, humidityToLocation := parseInput(input)
 
 	minLoc := math.MaxInt64
@@ -64,7 +64,7 @@ func day1(input []string) {
 
 }
 
-func day2(input []string) {
+func part2(input []string) {
 	seeds, seedToSoil, soilToFertilizer, fertilizerToWater, waterToLight, lightToTemperature, temperatureToHumidity, humidityToLocation := parseInput(input)
 
 	minLoc := math.MaxInt64
@@ -89,6 +89,6 @@ func day2(input []string) {
 
 func main() {
 	input := util.FetchInput(5)
-	day1(input)
-	day2(input)
+	part1(input)
+	part2(input)
 }

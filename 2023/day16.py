@@ -2,21 +2,6 @@ from util.util import fetch_input
 
 puzzle_input = fetch_input(16)
 
-# puzzle_input = [
-#     ".|...\\....",
-#     "|.-.\\.....",
-#     ".....|-...",
-#     "........|.",
-#     "..........",
-#     ".........\\",
-#     "..../.\\\\..",
-#     ".-.-/..|..",
-#     ".|....-|.\\",
-#     "..//.|....",
-# ]
-
-# print("\n".join(puzzle_input))
-
 
 def energize(r, c, d):
     energized = set()

@@ -21,22 +21,22 @@ def energize(r, c, d):
         seen.add((r, c, d))
 
         match puzzle_input[r][c], d:
-            case ".", (_, _):
-                beams.append((r + d[0], c + d[1], d))
-            case "|", (_, 0):
-                beams.append((r + d[0], c + d[1], d))
-            case "|", (0, _):
-                beams.append((r - 1, c, (-1, 0)))
-                beams.append((r + 1, c, (1, 0)))
-            case "-", (0, _):
-                beams.append((r + d[0], c + d[1], d))
-            case "-", (_, 0):
-                beams.append((r, c - 1, (0, -1)))
-                beams.append((r, c + 1, (0, 1)))
-            case "\\", (_, _):
-                beams.append((r + d[1], c + d[0], (d[1], d[0])))
-            case "/", (_, _):
-                beams.append((r - d[1], c - d[0], (-d[1], -d[0])))
+            case ".", (dr, dc):
+                beams.append((r + dr, c + dc, d))
+            case "|", (dr, 0):
+                beams.append((r + dr, c, d))
+            case "|", (0, dc):
+                beams.append((r - dc, c, (-dc, 0)))
+                beams.append((r + dc, c, (dc, 0)))
+            case "-", (0, dc):
+                beams.append((r, c + dc, d))
+            case "-", (dr, 0):
+                beams.append((r, c - dr, (0, -dr)))
+                beams.append((r, c + dr, (0, dr)))
+            case "\\", (dr, dc):
+                beams.append((r + dc, c + dr, (dc, dr)))
+            case "/", (dr, dc):
+                beams.append((r - dc, c - dr, (-dc, -dr)))
 
     return len(energized)
 

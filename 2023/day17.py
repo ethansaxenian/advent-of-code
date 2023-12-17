@@ -23,6 +23,9 @@ def dijkstras(straight_max: int, straight_min: int = 0):
         if (r, c, dr, dc, consecutive) in vis:
             continue
 
+        if consecutive > straight_max:
+            continue
+
         if (r, c) == (
             len(puzzle_input) - 1,
             len(puzzle_input[0]) - 1,
@@ -32,48 +35,25 @@ def dijkstras(straight_max: int, straight_min: int = 0):
 
         vis.add((r, c, dr, dc, consecutive))
 
-        if consecutive < straight_max:
-            new_r = r + dr
-            new_c = c + dc
+        for nr, nc in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            if (nr, nc) == (-dr, -dc):
+                continue
+
+            if (nr, nc) != (dr, dc):
+                if consecutive < straight_min:
+                    continue
+                new_consecutive = 1
+            else:
+                new_consecutive = consecutive + 1
+
+            new_r = r + nr
+            new_c = c + nc
+
             if 0 <= new_r < len(puzzle_input) and 0 <= new_c < len(puzzle_input[0]):
                 new_heat = heat + int(puzzle_input[new_r][new_c])
-                if new_heat < heats[(new_r, new_c, dr, dc, consecutive + 1)]:
-                    heats[(new_r, new_c, dr, dc, consecutive + 1)] = new_heat
-                    heappush(
-                        q,
-                        (
-                            new_heat,
-                            new_r,
-                            new_c,
-                            dr,
-                            dc,
-                            consecutive + 1,
-                        ),
-                    )
-
-        if consecutive >= straight_min:
-            for nr, nc in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-                if (nr, nc) == (-dr, -dc) or (nr, nc) == (dr, dc):
-                    continue
-
-                new_r = r + nr
-                new_c = c + nc
-
-                if 0 <= new_r < len(puzzle_input) and 0 <= new_c < len(puzzle_input[0]):
-                    new_heat = heat + int(puzzle_input[new_r][new_c])
-                    if new_heat < heats[(new_r, new_c, nr, nc, 1)]:
-                        heats[(new_r, new_c, nr, nc, 1)] = new_heat
-                        heappush(
-                            q,
-                            (
-                                new_heat,
-                                new_r,
-                                new_c,
-                                nr,
-                                nc,
-                                1,
-                            ),
-                        )
+                if new_heat < heats[(new_r, new_c, nr, nc, new_consecutive)]:
+                    heats[(new_r, new_c, nr, nc, new_consecutive)] = new_heat
+                    heappush(q, (new_heat, new_r, new_c, nr, nc, new_consecutive))
 
 
 dijkstras(3)

@@ -106,3 +106,39 @@ func Abs(x int) int {
 func ShortestPath(a, b [2]int) int {
 	return Abs(a[0]-b[0]) + Abs(a[1]-b[1])
 }
+
+func Map[T, U any](list []T, f func(T) U) []U {
+	newList := []U{}
+	for _, item := range list {
+		newList = append(newList, f(item))
+	}
+	return newList
+}
+
+func All[T any](list []T, f func(T) bool) bool {
+	for _, item := range list {
+		if !f(item) {
+			return false
+		}
+	}
+	return true
+}
+
+func GCD(a, b int) int {
+	for b != 0 {
+		t := b
+		b = a % b
+		a = t
+	}
+	return a
+}
+
+func LCM(a, b int, integers ...int) int {
+	result := a * b / GCD(a, b)
+
+	for i := 0; i < len(integers); i++ {
+		result = LCM(result, integers[i])
+	}
+
+	return result
+}

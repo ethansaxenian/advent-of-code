@@ -15,16 +15,14 @@ import (
 	\"github.com/ethansaxenian/advent-of-code/2024/util\"
 )
 
-var inputLines = util.FetchInputLines(${DAY})
-
-func part1() int {
+func part1(input []string) int {
 	return 0
 }
 
-func part2() int {
+func part2(input []string) int {
 	return 0
 }
 
 func main() {
-	util.Run(part1, part2)
+	util.Run(${DAY}, part1, part2)
 }" > "day${DAY}/main.go"

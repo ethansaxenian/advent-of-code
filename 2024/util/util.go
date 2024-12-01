@@ -37,7 +37,7 @@ func init() {
 	flag.Parse()
 }
 
-func Run[T comparable](day int, part1, part2 func([]string) T) {
+func Run[T int | string](day int, part1, part2 func([]string) T) {
 	var input []string
 	if testFlag {
 		input = FetchInputFromStdin()
@@ -81,7 +81,7 @@ func FetchInput(day int) []string {
 			panic(err)
 		}
 
-		return strings.Split(strings.Trim(string(data), " "), "\n")
+		return strings.Split(strings.TrimSpace(string(data)), "\n")
 	}
 
 	url := fmt.Sprintf("https://adventofcode.com/2024/day/%d/input", day)
@@ -112,7 +112,7 @@ func FetchInput(day int) []string {
 		panic(err)
 	}
 
-	return strings.Split(strings.Trim(string(body), " "), "\n")
+	return strings.Split(strings.TrimSpace(string(body)), "\n")
 }
 
 func FetchInputFromStdin() []string {

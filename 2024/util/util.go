@@ -7,8 +7,10 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -51,6 +53,21 @@ func Run[T comparable](day int, part1, part2 func([]string) T) {
 		ans = part2(input)
 	default:
 		panic("invalid part")
+	}
+
+	if !testFlag {
+		var stdin string
+		switch v := ans.(type) {
+		case int:
+			stdin = strconv.Itoa(v)
+		case string:
+			stdin = v
+		}
+		cmd := exec.Command("pbcopy")
+		cmd.Stdin = strings.NewReader(stdin)
+		if err := cmd.Run(); err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	fmt.Println(ans)

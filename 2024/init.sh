@@ -2,27 +2,23 @@
 
 DAY=$1
 
-if [[ -d "day${DAY}" ]]; then
+if [[ -a "day${DAY}.py" ]]; then
 	echo "Day ${DAY} already exists"
 	exit 1
 fi
 
-mkdir "day${DAY}"
 
-echo "package main
+echo "import util
 
-import (
-	\"github.com/ethansaxenian/advent-of-code/2024/util\"
-)
 
-func part1(input []string) int {
-	return 0
-}
+def part1(input: list[str]) -> int:
+  pass
 
-func part2(input []string) int {
-	return 0
-}
 
-func main() {
-	util.Run(${DAY}, part1, part2)
-}" > "day${DAY}/main.go"
+def part2(input: list[str]) -> int:
+  pass
+
+
+if __name__ == \"__main__\":
+    util.run(${DAY}, part1, part2)
+}" > "day${DAY}.py"

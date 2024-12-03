@@ -20,5 +20,4 @@ def part2(input: list[str]) -> int:
 
 
 if __name__ == \"__main__\":
-    util.run(${DAY}, part1, part2)
-}" > "day${DAY}.py"
+    util.run(${DAY}, part1, part2)" > "day${DAY}.py"

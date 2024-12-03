@@ -2,10 +2,10 @@ import argparse
 import os
 import subprocess
 import sys
+import time
 from collections.abc import Callable
 from datetime import timedelta
 from pathlib import Path, PurePath
-from time import time
 
 import httpx
 from dotenv import load_dotenv
@@ -68,7 +68,7 @@ def run(
     else:
         input = fetch_input(day)
 
-    start = time()
+    start = time.perf_counter_ns()
     match int(args.part):
         case 1:
             ans = part1(input)
@@ -76,11 +76,11 @@ def run(
             ans = part2(input)
         case _:
             raise ValueError("invalid part")
-    duration = time() - start
+    duration = time.perf_counter_ns() - start
 
     if not args.test:
         subprocess.run("pbcopy", input=str(ans).encode())
 
     print(ans)
 
-    print(f"Ran in: {timedelta(seconds=duration).microseconds/1000}")
+    print(f"Ran in: {duration / 1e6}ms")

@@ -3,9 +3,9 @@ from collections import Counter
 import util
 
 
-def part1(input: list[str]) -> int:
+def part1(input: str) -> int:
     l1, l2 = [], []
-    for line in input:
+    for line in input.splitlines():
         x, y = map(int, line.split())
         l1.append(x)
         l2.append(y)
@@ -17,10 +17,10 @@ def part1(input: list[str]) -> int:
     return s
 
 
-def part2(input: list[str]) -> int:
+def part2(input: str) -> int:
     l1 = []
     c = Counter()
-    for line in input:
+    for line in input.splitlines():
         x, y = map(int, line.split())
         l1.append(x)
         c[y] += 1

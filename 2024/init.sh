@@ -11,11 +11,11 @@ fi
 echo "import util
 
 
-def part1(input: list[str]) -> int:
+def part1(input: str) -> int:
   pass
 
 
-def part2(input: list[str]) -> int:
+def part2(input: str) -> int:
   pass
 
 

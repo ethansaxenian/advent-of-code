@@ -10,9 +10,9 @@ def is_safe(lst: list[int]) -> bool:
     return all(0 < abs(x - y) <= 3 for x, y in itertools.pairwise(lst))
 
 
-def part1(input: list[str]) -> int:
+def part1(input: str) -> int:
     s = 0
-    for line in input:
+    for line in input.splitlines():
         ns = list(map(int, line.split()))
         if is_safe(ns):
             s += 1
@@ -20,9 +20,9 @@ def part1(input: list[str]) -> int:
     return s
 
 
-def part2(input: list[str]) -> int:
+def part2(input: str) -> int:
     s = 0
-    for line in input:
+    for line in input.splitlines():
         line = list(map(int, line.split()))
         for i in range(len(line)):
             lst = line[:i] + line[i + 1 :]

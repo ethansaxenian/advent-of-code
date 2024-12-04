@@ -31,13 +31,13 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-def fetch_input(day: int) -> list[str]:
+def fetch_input(day: int) -> str:
     input_dir = Path(CURR_DIR / "input")
     input_dir.mkdir(exist_ok=True)
 
     input_path = Path(input_dir / f"day{day}.txt")
     if input_path.exists():
-        return input_path.read_text().strip().splitlines()
+        return input_path.read_text().strip()
 
     res = httpx.get(
         f"https://adventofcode.com/2024/day/{day}/input",
@@ -51,36 +51,32 @@ def fetch_input(day: int) -> list[str]:
 
     input_path.write_text(puzzle_input)
 
-    return puzzle_input.splitlines()
-
-
-def fetch_input_from_stdin() -> list[str]:
-    return sys.stdin.read().splitlines()
+    return puzzle_input.strip()
 
 
 def run(
     day: int,
-    part1: Callable[[list[str]], str | int],
-    part2: Callable[[list[str]], str | int],
+    part1: Callable[[str], str | int],
+    part2: Callable[[str], str | int],
 ):
     if args.test:
-        input = sys.stdin.read().splitlines()
+        input = sys.stdin.read()
     else:
         input = fetch_input(day)
 
     start = time.perf_counter_ns()
     match int(args.part):
         case 1:
-            ans = part1(input)
+            answer = part1(input)
         case 2:
-            ans = part2(input)
+            answer = part2(input)
         case _:
             raise ValueError("invalid part")
     duration = time.perf_counter_ns() - start
 
     if not args.test:
-        subprocess.run("pbcopy", input=str(ans).encode())
+        subprocess.run("pbcopy", input=str(answer).encode())
 
-    print(ans)
+    print(answer)
 
     print(f"Ran in: {duration / 1e6}ms")

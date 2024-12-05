@@ -1,0 +1,1 @@
+:%s/mul(\(\d\+\),\(\d\+\))/\r\1*\2\r/g<CR>v/\d\+\*\d\+/d<CR>:%s/\n/+<CR>cc<C-r>=<C-r>"<BS><CR><ESC>

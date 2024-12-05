@@ -12,11 +12,11 @@ echo "import util
 
 
 def part1(input: str) -> int:
-  pass
+    pass
 
 
 def part2(input: str) -> int:
-  pass
+    pass
 
 
 if __name__ == \"__main__\":

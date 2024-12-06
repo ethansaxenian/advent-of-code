@@ -2,7 +2,7 @@
 
 DAY=$1
 
-if [[ -a "day${DAY}.py" ]]; then
+if [[ -a "${DAY}.py" ]]; then
 	echo "Day ${DAY} already exists"
 	exit 1
 fi
@@ -20,4 +20,4 @@ def part2(input: str) -> int:
 
 
 if __name__ == \"__main__\":
-    util.run(${DAY}, part1, part2)" > "day${DAY}.py"
+    util.run(${DAY}, part1, part2)" > "${DAY}.py"

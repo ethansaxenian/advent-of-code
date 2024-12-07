@@ -1,21 +1,13 @@
 import argparse
-import os
+import json
 import subprocess
 import sys
 import time
+import urllib.request
 from collections.abc import Callable
-from datetime import timedelta
 from pathlib import Path, PurePath
 
-import httpx
-from dotenv import load_dotenv
-
 CURR_DIR = PurePath(__file__).parent
-
-load_dotenv(PurePath(CURR_DIR.parent / ".env"))
-
-COOKIE = os.environ["AOC_COOKIE"]
-EMAIL = os.environ["AOC_EMAIL"]
 
 parser = argparse.ArgumentParser()
 
@@ -32,6 +24,9 @@ args = parser.parse_args()
 
 
 def fetch_input(day: int) -> str:
+    with Path(CURR_DIR.parent / "aoc.json").open() as f:
+        config = json.load(f)
+
     input_dir = Path(CURR_DIR / "input")
     input_dir.mkdir(exist_ok=True)
 
@@ -39,15 +34,17 @@ def fetch_input(day: int) -> str:
     if input_path.exists():
         return input_path.read_text().strip()
 
-    res = httpx.get(
+    req = urllib.request.Request(
         f"https://adventofcode.com/2024/day/{day}/input",
-        headers={
-            "Cookie": f"session={COOKIE}",
-            "User-Agent": f"github.com/ethansaxenian/advent-of-code/tree/main/2024 by {EMAIL}",
-        },
-    ).raise_for_status()
+    )
+    req.add_header("Cookie", f"session={config['cookie']}")
+    req.add_header(
+        "User-Agent",
+        f"github.com/ethansaxenian/advent-of-code/tree/main/2024 by {config['email']}",
+    )
 
-    puzzle_input = res.text
+    with urllib.request.urlopen(req) as response:
+        puzzle_input = response.read().decode("utf-8").strip()
 
     input_path.write_text(puzzle_input)
 

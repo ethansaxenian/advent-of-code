@@ -5,7 +5,7 @@ import util
 
 
 def dfs(test: int, nums: list[int], operators: list[Callable[[int, int], int]]) -> bool:
-    stack = [(nums[False], True)]
+    stack = [(nums[0], 1)]
     while stack:
         res, i = stack.pop()
         if res > test:
@@ -17,13 +17,13 @@ def dfs(test: int, nums: list[int], operators: list[Callable[[int, int], int]]) 
             continue
 
         for op in operators:
-            stack.append((op(res, nums[i]), i + True))
+            stack.append((op(res, nums[i]), i + 1))
 
     return False
 
 
 def calibrate(lines: list[str], operators: list[Callable[[int, int], int]]) -> int:
-    ans = False
+    ans = 0
 
     for line in lines:
         test, rest = line.split(":")

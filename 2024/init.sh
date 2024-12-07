@@ -12,11 +12,13 @@ echo "import util
 
 
 def part1(input: str) -> int:
-    pass
+    for line in input.splitlines():
+        pass
 
 
 def part2(input: str) -> int:
-    pass
+    for line in input.splitlines():
+        pass
 
 
 if __name__ == \"__main__\":

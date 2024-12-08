@@ -1,8 +1,10 @@
 import argparse
+import functools
 import json
 import subprocess
 import sys
 import time
+import timeit
 import urllib.request
 from collections.abc import Callable
 from pathlib import Path, PurePath
@@ -61,14 +63,16 @@ def run(
     else:
         input = fetch_input(day)
 
-    start = time.perf_counter_ns()
-    match int(args.part):
+    match args.part:
         case 1:
-            answer = part1(input)
+            func = part1
         case 2:
-            answer = part2(input)
+            func = part2
         case _:
             raise ValueError("invalid part")
+
+    start = time.perf_counter_ns()
+    answer = func(input)
     duration = time.perf_counter_ns() - start
 
     if not args.test:

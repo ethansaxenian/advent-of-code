@@ -1,0 +1,4 @@
+y$:let @c=(system("wc -c",@")-3)/2<CR>:let @p="po<CTRL-V><ESC>"<CR>o0<CR><ESC>
+qq@s@fqqfggxjyiw<CTRL-A>G:norm <CTRL-R>=<CTRL-R>-+1<CR>@p<CR>kddqqsggxG:norm <CTRL-R>=<CTRL-R>-+1<CR>i.<CTRL-V><CR><CR>kddq@f:norm <CTRL-R>c@qddggdj
+:let @l=line('$')<CR>qrgg/\.<CR>mmGdd'mVpq:norm <CTRL-R>l@r<CR>
+<CTRL-V>GI0*<ESC>j<CTRL-V>Gg<CTRL-A>kqaJr+cc<CTRL-R>=<CTRL-R>"<BS><CR><ESC>q:norm <CTRL-R>l@a<CR>

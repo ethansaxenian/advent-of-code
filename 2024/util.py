@@ -1,10 +1,8 @@
 import argparse
-import functools
 import json
 import subprocess
 import sys
 import time
-import timeit
 import urllib.request
 from collections.abc import Callable
 from pathlib import Path, PurePath

@@ -1,0 +1,7 @@
+y$:let @c=(strlen(@")-3)/2<CR>o0<ESC>qq@s@fq
+qfggxjyiw<CTRL-A>Go<ESC>:norm <CTRL-R>=<CTRL-R>-+1<CR>p<CR>V:s/<CTRL-R>0/& /ge<CR>dwq
+qsggxGo<ESC>:norm <CTRL-R>=<CTRL-R>-+1<CR>i.<CR>xV:s/./. /ge<CR>q
+@f:norm <CTRL-R>c@q<CR>:g/^$/d<CR>
+qqgg<CTRL-X>"nyiw/<CTRL-R>n<CR>Ymm:let @c=count(@",' ')/2<CR>:1,'ms/\v(\. ){<CTRL-R>c}/<CTRL-R>"/gc<CR>l'mV:s/<CTRL-R>n/./g<CR>:g/^$/dq
+qa:norm! @q<CR><CR>q:norm <CTRL-R>n@a<CR><CR>G
+:%s/ /\r/g<CR>:g/^$/d<CR>ggdd<CTRL-V>GI0*<ESC>j<CTRL-V>Gg<CTRL-A>:g/\./d<CR>GyiwggqaJr+cc<CTRL-R>=<CTRL-R>"<BS><CR><ESC>q:norm <CTRL-R>0@a<CR>

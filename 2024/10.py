@@ -1,5 +1,3 @@
-import math
-
 import util
 
 
@@ -11,36 +9,32 @@ def part1(input: str) -> int:
             grid[(r, c)] = int(char)
             if char == "0":
                 trailheads.append((r, c))
-    s = 0
-    for th in trailheads:
+
+    score = 0
+    for start in trailheads:
         vis = set()
         ends = set()
-        q = [th]
+        stack = [start]
 
-        while q:
-            loc = q.pop()
+        while stack:
+            pos = stack.pop()
 
-            h = grid.get(loc, None)
-
-            if h is None:
+            if (height := grid.get(pos)) is None:
                 continue
 
-            vis.add(loc)
-            if h == 9:
-                ends.add(loc)
+            vis.add(pos)
+            if height == 9:
+                ends.add(pos)
                 continue
 
-            r, c = loc
             for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                new = (r + dr, c + dc)
-                if new not in grid or new in vis or (grid.get(new, math.inf) != h + 1):
-                    continue
+                new = (pos[0] + dr, pos[1] + dc)
+                if new not in vis and grid.get(new) == height + 1:
+                    stack.append(new)
 
-                q.append(new)
+        score += len(ends)
 
-        s += len(ends)
-
-    return s
+    return score
 
 
 def part2(input: str) -> int:
@@ -52,34 +46,29 @@ def part2(input: str) -> int:
             if char == "0":
                 trailheads.append((r, c))
 
-    s = 0
-    for th in trailheads:
-        paths = set()
-        q = [(th, [th])]
+    score = 0
+    for start in trailheads:
+        paths = []
+        stack = [(start, [start])]
 
-        while q:
-            loc, path = q.pop()
+        while stack:
+            pos, path = stack.pop()
 
-            h = grid.get(loc, None)
-
-            if h is None:
+            if (height := grid.get(pos)) is None:
                 continue
 
-            if h == 9:
-                paths.add("".join(map(str, path)))
+            if height == 9:
+                paths.append(path)
                 continue
 
-            r, c = loc
             for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                new = (r + dr, c + dc)
-                if new not in grid or (grid.get(new, math.inf) != h + 1):
-                    continue
+                new = (pos[0] + dr, pos[1] + dc)
+                if grid.get(new) == height + 1:
+                    stack.append((new, path + [new]))
 
-                q.append((new, path + [new]))
+        score += len(paths)
 
-        s += len(paths)
-
-    return s
+    return score
 
 
 if __name__ == "__main__":

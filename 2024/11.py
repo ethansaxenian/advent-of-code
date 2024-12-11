@@ -1,33 +1,47 @@
-from collections import Counter
-from collections.abc import Iterable
+import math
+from collections import Counter, defaultdict
+from functools import cache
 
 import util
 
 
-def blink(initial: Iterable[int], num: int) -> int:
-    stones = Counter(initial)
-    for i in range(num):
-        next_stones = Counter()
-        for stone, n in stones.items():
-            if stone == 0:
-                next_stones[1] += n
-            elif (l := len(s := str(stone))) % 2 == 0:
-                a, b = map(int, [s[: l // 2], s[l // 2 :]])
-                next_stones[a] += n
-                next_stones[b] += n
-            else:
-                next_stones[stone * 2024] += n
-        stones = next_stones
+@cache
+def change(stone: int) -> list[int]:
+    if stone == 0:
+        return [1]
 
-    return stones.total()
+    digits = int(math.log10(stone) + 1)
+    if digits % 2 == 0:
+        x = 10 ** (digits // 2)
+        return [stone // x, stone % x]
+
+    return [stone * 2024]
+
+
+def blink(stones: dict[int, int]) -> dict[int, int]:
+    _stones = defaultdict(int)
+    for stone, count in stones.items():
+        for s in change(stone):
+            _stones[s] += count
+    return _stones
 
 
 def part1(input: str) -> int:
-    return blink(map(int, input.split()), 25)
+    stones = Counter(map(int, input.split()))
+
+    for _ in range(25):
+        stones = blink(stones)
+
+    return sum(stones.values())
 
 
 def part2(input: str) -> int:
-    return blink(map(int, input.split()), 75)
+    stones = Counter(map(int, input.split()))
+
+    for _ in range(75):
+        stones = blink(stones)
+
+    return sum(stones.values())
 
 
 if __name__ == "__main__":

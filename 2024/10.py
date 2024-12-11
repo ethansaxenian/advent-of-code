@@ -48,25 +48,22 @@ def part2(input: str) -> int:
 
     score = 0
     for start in trailheads:
-        paths = []
-        stack = [(start, [start])]
+        stack = [start]
 
         while stack:
-            pos, path = stack.pop()
+            pos = stack.pop()
 
             if (height := grid.get(pos)) is None:
                 continue
 
             if height == 9:
-                paths.append(path)
+                score += 1
                 continue
 
             for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
                 new = (pos[0] + dr, pos[1] + dc)
                 if grid.get(new) == height + 1:
-                    stack.append((new, path + [new]))
-
-        score += len(paths)
+                    stack.append(new)
 
     return score
 

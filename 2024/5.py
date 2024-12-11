@@ -1,3 +1,4 @@
+import functools
 import itertools
 
 import util
@@ -32,16 +33,18 @@ def part2(input: str) -> int:
         rules.add((a, b))
         i += 1
 
-    class Page(str):
-        def __lt__(self, other):
-            return (self, other) in rules
+    def cmp(a, b):
+        return -1 if (a, b) in rules else 1
 
     s = 0
     i += 1
     while i < len(lines):
         update = lines[i].split(",")
         if any((a, b) not in rules for a, b in itertools.combinations(update, 2)):
-            update = sorted(map(Page, update))
+            update = sorted(
+                update,
+                key=functools.cmp_to_key(cmp),
+            )
             s += int(update[len(update) // 2])
 
         i += 1

@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import defaultdict
 
 import util
 
@@ -19,7 +19,7 @@ def part1(input: str) -> int:
 
 def part2(input: str) -> int:
     l1 = []
-    c = Counter()
+    c = defaultdict(int)
     for line in input.splitlines():
         x, y = map(int, line.split())
         l1.append(x)

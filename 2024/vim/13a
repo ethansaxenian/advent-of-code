@@ -1,0 +1,4 @@
+:%s#\vButton A: X\+(\d+), Y\+(\d+)\nButton B: X\+(\d+), Y\+(\d+)\nPrize: X\=(\d+), Y\=(\d+)\n#(\1.0*\6-\2*\5)/(\1*\4-\2*\3) 3*(\5-\3*(\1.0*\6-\2*\5)/(\1*\4-\2*\3))/\1<CR>
+:%s/\v[^ ]+/\=eval(submatch(0))/g<CR>
+:v/\v^\d+\.0 \d+\.0$/d<CR>
+vapJ:s/ /+/g<CR>cc<CTRL-R>=<CTRL-R>"<BS><CR><ESC>xx

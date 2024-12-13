@@ -1,0 +1,4 @@
+qx:%s/ /\r/g<CR>q
+oo<ESC>qsyiw:let @l=strlen(@")/2<CR>V:s/\v^(\d{<CTRL-R>l})(\d{<CTRL-R>l})$/\1 \2/e<CR>qdd
+qq:%norm @s<CR>:%s/^\d\+$/\=submatch(0)*2024<CR>:%s/^0$/1/e<CR>@x:%s/\v^0+(\d+)$/\1/e<CR>q
+24@q{V:s/.*/\=line('$')<CR>jdG

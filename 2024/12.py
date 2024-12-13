@@ -1,17 +1,15 @@
-from collections import deque
-
 import util
 
 
 def search(start, grid) -> tuple[set[tuple[int, int]], int]:
     p = grid[start]
-    q = deque([start])
+    stack = [start]
 
     vis = set()
     perimeter = 0
 
-    while q:
-        pos = q.popleft()
+    while stack:
+        pos = stack.pop()
         if pos in vis:
             continue
 
@@ -23,7 +21,7 @@ def search(start, grid) -> tuple[set[tuple[int, int]], int]:
 
         r, c = pos
         for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
-            q.append((r + dr, c + dc))
+            stack.append((r + dr, c + dc))
 
     return vis, perimeter
 
@@ -65,18 +63,14 @@ def part2(input: str) -> int:
 
         vertices = 0
         for r, c in plot:
-            for (dr1, dc1), (dr2, dc2), (dr3, dc3) in [
-                [(1, 0), (1, 1), (0, 1)],
-                [(0, 1), (-1, 1), (-1, 0)],
-                [(-1, 0), (-1, -1), (0, -1)],
-                [(0, -1), (1, -1), (1, 0)],
-            ]:
-                x = grid.get((r + dr1, c + dc1))
-                y = grid.get((r + dr2, c + dc2))
-                z = grid.get((r + dr3, c + dc3))
+            for dr, dc in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+                x = grid.get((r + dr, c))
+                y = grid.get((r + dr, c + dc))
+                z = grid.get((r, c + dc))
+
                 if (
-                    (x != plant and y != plant and z != plant)
-                    or (x != plant and y == plant and z != plant)
+                    (x != plant and z != plant)
+                    or (x != plant and z != plant)
                     or (x == plant and y != plant and z == plant)
                 ):
                     vertices += 1

@@ -2,24 +2,14 @@ import re
 
 import util
 
-# H, W = 7, 11
 H, W = 103, 101
-
-
-def tick(robots, seconds):
-    new_robots = []
-    for pc, pr, vc, vr in robots:
-        c = (vc * seconds + pc) % W
-        r = (vr * seconds + pr) % H
-        new_robots.append((c, r, vc, vr))
-
-    return new_robots
 
 
 def part1(input: str) -> int:
     q1, q2, q3, q4 = 0, 0, 0, 0
-    for line in input.splitlines():
-        pc, pr, vc, vr = map(int, re.findall(r"-?\d+", line))
+    for pc, pr, vc, vr in map(
+        lambda line: map(int, re.findall(r"-?\d+", line)), input.splitlines()
+    ):
         c = (vc * 100 + pc) % W
         r = (vr * 100 + pr) % H
 
@@ -38,7 +28,7 @@ def part1(input: str) -> int:
 def part2(input: str) -> int:
     robots = []
     for line in input.splitlines():
-        robots.append(tuple(map(int, re.findall(r"-?\d+", line))))
+        robots.append(map(int, re.findall(r"-?\d+", line)))
 
     num_robots = len(robots)
 

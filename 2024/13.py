@@ -22,7 +22,7 @@ def solve(a, b, prize) -> int:
     B = (ax * py - ay * px) / (ax * by - ay * bx)
     A = (px - bx * B) / ax
 
-    if int(A) == A and int(B) == B:
+    if A.is_integer() and B.is_integer():
         return int(3 * A + B)
 
     return 0

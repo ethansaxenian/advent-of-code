@@ -20,23 +20,17 @@ def part1(input: str) -> int:
             continue
 
         elif grid[new_fish] == "O":
-            boxes_in_the_way = set()
             xr, xc = new_fish
             while True:
-                match grid[(xr, xc)]:
-                    case "O":
-                        boxes_in_the_way.add((xr, xc))
-                    case "#":
-                        break
-                    case ".":
-                        for br, bc in boxes_in_the_way:
-                            grid[(br + dr, bc + dc)] = "O"
-                        grid[fish] = "."
-                        grid[new_fish] = "@"
-                        fish = new_fish
-                        break
-                    case _:
-                        pass
+                x = grid[(xr, xc)]
+                if x == "#":
+                    break
+                elif x == ".":
+                    grid[(xr, xc)] = "O"
+                    grid[fish] = "."
+                    grid[new_fish] = "@"
+                    fish = new_fish
+                    break
 
                 xr += dr
                 xc += dc

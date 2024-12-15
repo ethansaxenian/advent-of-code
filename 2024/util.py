@@ -79,3 +79,10 @@ def run(
     print(answer)
 
     print(f"Ran in: {duration / 1e6}ms")
+
+
+def print_grid(height: int, width: int, print_char: Callable[[int, int], str | int]):
+    for r in range(height):
+        for c in range(width):
+            print(print_char(r, c), end="")
+        print()

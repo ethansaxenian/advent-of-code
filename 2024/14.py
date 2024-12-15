@@ -7,9 +7,9 @@ H, W = 103, 101
 
 def part1(input: str) -> int:
     q1, q2, q3, q4 = 0, 0, 0, 0
-    for pc, pr, vc, vr in map(
-        lambda line: map(int, re.findall(r"-?\d+", line)), input.splitlines()
-    ):
+    for pc, pr, vc, vr in [
+        map(int, re.findall(r"-?\d+", line)) for line in input.splitlines()
+    ]:
         c = (vc * 100 + pc) % W
         r = (vr * 100 + pr) % H
 
@@ -26,9 +26,7 @@ def part1(input: str) -> int:
 
 
 def part2(input: str) -> int:
-    robots = []
-    for line in input.splitlines():
-        robots.append(map(int, re.findall(r"-?\d+", line)))
+    robots = [map(int, re.findall(r"-?\d+", line)) for line in input.splitlines()]
 
     num_robots = len(robots)
 

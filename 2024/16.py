@@ -16,7 +16,6 @@ def part1(input: str) -> int:
             if char == "E":
                 end = (r, c)
 
-    min_points = math.inf
     seen = {(start, (0, 1)): math.inf}
     stack = [(0, start, (0, 1), {start})]
     heapq.heapify(stack)
@@ -24,29 +23,31 @@ def part1(input: str) -> int:
         p, pos, dir, vis = heapq.heappop(stack)
 
         if pos == end:
-            min_points = min(min_points, p)
-            continue
+            return p
 
         if (pos, dir) in seen and p >= seen[(pos, dir)]:
             continue
 
         seen[(pos, dir)] = p
 
-        nr, nc = pos[0] + dir[0], pos[1] + dir[1]
+        r, c = pos
+        dr, dc = dir
+
+        nr, nc = r + dr, c + dc
         if grid[nr][nc] != "#" and (nr, nc) not in vis:
             heapq.heappush(stack, (p + 1, (nr, nc), dir, vis | {(nr, nc)}))
 
-        for next_dir in DIRS:
-            if next_dir == dir:
-                continue
+        ndr, ndc = dc * -1, dr
+        nr, nc = r + ndr, c + ndc
+        if grid[nr][nc] != "#":
+            heapq.heappush(stack, (p + 1000, pos, (ndr, ndc), vis))
 
-            nr, nc = pos[0] + next_dir[0], pos[1] + next_dir[1]
-            if grid[nr][nc] == "#":
-                continue
+        ndr, ndc = dc, dr * -1
+        nr, nc = r + ndr, c + ndc
+        if grid[nr][nc] != "#":
+            heapq.heappush(stack, (p + 1000, pos, (ndr, ndc), vis))
 
-            heapq.heappush(stack, (p + 1000, pos, next_dir, vis))
-
-    return int(min_points)
+    return -1
 
 
 def part2(input: str) -> int:
@@ -73,6 +74,8 @@ def part2(input: str) -> int:
                 path = vis
             elif p == min_points:
                 path |= vis
+            else:
+                return len(path)
 
             continue
 
@@ -81,21 +84,24 @@ def part2(input: str) -> int:
 
         seen[(pos, dir)] = p
 
-        nr, nc = pos[0] + dir[0], pos[1] + dir[1]
+        r, c = pos
+        dr, dc = dir
+
+        nr, nc = r + dr, c + dc
         if grid[nr][nc] != "#" and (nr, nc) not in vis:
             heapq.heappush(stack, (p + 1, (nr, nc), dir, vis | {(nr, nc)}))
 
-        for next_dir in DIRS:
-            if next_dir == dir:
-                continue
+        ndr, ndc = dc * -1, dr
+        nr, nc = r + ndr, c + ndc
+        if grid[nr][nc] != "#":
+            heapq.heappush(stack, (p + 1000, pos, (ndr, ndc), vis))
 
-            nr, nc = pos[0] + next_dir[0], pos[1] + next_dir[1]
-            if grid[nr][nc] == "#":
-                continue
+        ndr, ndc = dc, dr * -1
+        nr, nc = r + ndr, c + ndc
+        if grid[nr][nc] != "#":
+            heapq.heappush(stack, (p + 1000, pos, (ndr, ndc), vis))
 
-            heapq.heappush(stack, (p + 1000, pos, next_dir, vis))
-
-    return len(path)
+    return -1
 
 
 if __name__ == "__main__":

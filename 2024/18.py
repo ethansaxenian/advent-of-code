@@ -8,7 +8,7 @@ H = W = 71
 L = 1024
 
 
-def dijkstras(grid, bytes) -> int:
+def dijkstras(grid, bytes):
     start = (0, 0)
     end = (H - 1, W - 1)
     q: list[tuple[int, tuple[int, int], set[tuple[int, int]]]] = [(0, start, set())]
@@ -17,7 +17,7 @@ def dijkstras(grid, bytes) -> int:
         x, pos, vis = heapq.heappop(q)
 
         if pos == end:
-            return len(vis)
+            return vis
 
         if pos in dists and x >= dists[pos]:
             continue
@@ -30,7 +30,7 @@ def dijkstras(grid, bytes) -> int:
             if grid[pos] and new_pos not in bytes and new_pos not in vis:
                 heapq.heappush(q, (x + 1, new_pos, vis | {pos}))
 
-    return -1
+    return set()
 
 
 def part1(input: str) -> int:
@@ -47,16 +47,16 @@ def part1(input: str) -> int:
             else:
                 grid[(r, c)] = True
 
-    return dijkstras(grid, set())
+    return len(dijkstras(grid, set()))
 
 
 def part2(input: str) -> str:
-    extra_bytes = list(
+    bytes = list(
         (int(y), int(x))
         for x, y in map(lambda line: line.split(","), input.splitlines())
     )
 
-    curr_bytes, rest = set(extra_bytes[:L]), extra_bytes[L:]
+    curr_bytes, rest = set(bytes[:L]), bytes[L:]
 
     grid = defaultdict(lambda: False)
     for r in range(H):
@@ -67,10 +67,16 @@ def part2(input: str) -> str:
                 grid[(r, c)] = True
 
     extra_bytes = set()
+
+    path = dijkstras(grid, set())
     for byte in rest:
         extra_bytes.add(byte)
-        if dijkstras(grid, extra_bytes) == -1:
+        if byte not in path:
+            continue
+        new_path = dijkstras(grid, extra_bytes)
+        if len(new_path) == 0:
             return f"{byte[1]},{byte[0]}"
+        path |= new_path
 
     raise Exception
 

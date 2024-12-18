@@ -1,6 +1,5 @@
-import heapq
 import sys
-from collections import defaultdict
+from collections import defaultdict, deque
 
 import util
 
@@ -8,13 +7,13 @@ H = W = 71
 L = 1024
 
 
-def dijkstras(grid, bytes):
+def dijkstras(bytes):
     start = (0, 0)
     end = (H - 1, W - 1)
-    q: list[tuple[int, tuple[int, int], set[tuple[int, int]]]] = [(0, start, set())]
-    dists: dict[tuple[int, int], int] = {start: sys.maxsize}
+    q = deque([(0, start, set())])
+    dists = {start: sys.maxsize}
     while q:
-        x, pos, vis = heapq.heappop(q)
+        x, pos, vis = q.popleft()
 
         if pos == end:
             return vis
@@ -27,8 +26,13 @@ def dijkstras(grid, bytes):
         r, c = pos
         for dr, dc in [(1, 0), (0, -1), (-1, 0), (0, 1)]:
             new_pos = r + dr, c + dc
-            if grid[pos] and new_pos not in bytes and new_pos not in vis:
-                heapq.heappush(q, (x + 1, new_pos, vis | {pos}))
+            if (
+                0 <= r + dr < H
+                and 0 <= c + dc < W
+                and new_pos not in bytes
+                and new_pos not in vis
+            ):
+                q.append((x + 1, new_pos, vis | {pos}))
 
     return set()
 
@@ -39,15 +43,7 @@ def part1(input: str) -> int:
         for x, y in map(lambda line: line.split(","), input.splitlines()[:L])
     )
 
-    grid = defaultdict(lambda: False)
-    for r in range(H):
-        for c in range(W):
-            if (r, c) in bytes:
-                grid[(r, c)] = False
-            else:
-                grid[(r, c)] = True
-
-    return len(dijkstras(grid, set()))
+    return len(dijkstras(bytes))
 
 
 def part2(input: str) -> str:
@@ -56,29 +52,21 @@ def part2(input: str) -> str:
         for x, y in map(lambda line: line.split(","), input.splitlines())
     )
 
-    curr_bytes, rest = set(bytes[:L]), bytes[L:]
+    first, rest = set(bytes[:L]), bytes[L:]
 
-    grid = defaultdict(lambda: False)
-    for r in range(H):
-        for c in range(W):
-            if (r, c) in curr_bytes:
-                grid[(r, c)] = False
-            else:
-                grid[(r, c)] = True
+    lo = 0
+    hi = len(rest)
 
-    extra_bytes = set()
+    while hi - lo > 1:
+        curr = (hi + lo) // 2
 
-    path = dijkstras(grid, set())
-    for byte in rest:
-        extra_bytes.add(byte)
-        if byte not in path:
-            continue
-        new_path = dijkstras(grid, extra_bytes)
-        if len(new_path) == 0:
-            return f"{byte[1]},{byte[0]}"
-        path |= new_path
+        path = dijkstras(first | set(rest[:curr]))
+        if len(path) > 0:
+            lo = curr
+        else:
+            hi = curr
 
-    raise Exception
+    return f"{rest[lo][1]},{rest[lo][0]}"
 
 
 if __name__ == "__main__":

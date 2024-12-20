@@ -29,20 +29,20 @@ def part2(input: str) -> int:
     patterns = [x.strip() for x in lines[0].split(",")]
 
     @cache
-    def _dfs(d, p) -> int:
-        d = d.removesuffix(p)
+    def _dfs(d) -> int:
         if d == "":
             return 1
 
         s = 0
-        for np in patterns:
-            if d.endswith(np):
-                s += _dfs(d, np)
+        for p in patterns:
+            if d.endswith(p):
+                s += _dfs(d.removesuffix(p))
+
         return s
 
     n = 0
     for design in lines[2:]:
-        n += sum(_dfs(design, p) for p in patterns if design.endswith(p))
+        n += _dfs(design)
 
     return n
 

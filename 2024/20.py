@@ -46,13 +46,18 @@ def solve(input: str, cheat_length: int) -> int:
 
     n = 0
 
-    for a, b in itertools.combinations(dists.keys(), 2):
-        if (manhattan := abs(a[0] - b[0]) + abs(a[1] - b[1])) <= cheat_length:
-            dist = abs(dists[a] - dists[b])
-            if time - (time - dist + manhattan) >= 100:
-                n += 1
+    for (r1, c1), a_dist in dists.items():
+        for r2 in range(r1 - cheat_length, r1 + cheat_length + 1):
+            for c2 in range(c1 - cheat_length, c1 + cheat_length + 1):
+                if grid.get((r2, c2), "#") == "#":
+                    continue
 
-    return n
+                if (manhattan := abs(r1 - r2) + abs(c1 - c2)) <= cheat_length:
+                    dist = abs(a_dist - dists[(r2, c2)])
+                    if time - (time - dist + manhattan) >= 100:
+                        n += 1
+
+    return n // 2
 
 
 def part1(input: str) -> int:

@@ -47,12 +47,10 @@ def solve(input: str, cheat_length: int) -> int:
     n = 0
 
     for a, b in itertools.combinations(dists.keys(), 2):
-        dist = abs(dists[a] - dists[b])
-        manhattan = abs(a[0] - b[0]) + abs(a[1] - b[1])
-        time_saved = time - (time - dist + manhattan)
-
-        if manhattan <= cheat_length and time_saved >= 100:
-            n += 1
+        if (manhattan := abs(a[0] - b[0]) + abs(a[1] - b[1])) <= cheat_length:
+            dist = abs(dists[a] - dists[b])
+            if time - (time - dist + manhattan) >= 100:
+                n += 1
 
     return n
 

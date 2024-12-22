@@ -28,19 +28,18 @@ def part1(input: str) -> int:
 def part2(input: str) -> int:
     sequences = defaultdict(int)
     for n in map(int, input.splitlines()):
-        digits = deque([n % 10], maxlen=4)
+        digits = [n % 10]
         changes = deque([sys.maxsize], maxlen=4)
         seen = set()
         for _ in range(2000):
             n = new_secret(n)
-            last_digit = digits[-1]
             new_last_digit = n % 10
-            changes.append(new_last_digit - last_digit)
+            changes.append(new_last_digit - digits[-1])
             digits.append(new_last_digit)
 
-            if (c := tuple(changes)) not in seen:
-                sequences[c] += digits[-1]
-                seen.add(c)
+            if (s := tuple(changes)) not in seen:
+                sequences[s] += new_last_digit
+                seen.add(s)
 
     return max(sequences.values())
 

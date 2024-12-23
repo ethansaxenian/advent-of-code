@@ -1,4 +1,3 @@
-import itertools
 from collections import defaultdict
 
 import networkx as nx
@@ -14,21 +13,19 @@ def part1(input: str) -> int:
         g[b].add(a)
 
     n = 0
-    for x, y, z in itertools.combinations(g.keys(), 3):
-        if "t" not in (x[0] + y[0] + z[0]):
-            continue
 
-        if not (x in g[y] and x in g[z]):
-            continue
-
-        if not (y in g[x] and y in g[z]):
-            continue
-
-        if not (z in g[x] and z in g[y]):
-            continue
-
-        n += 1
-
+    for x in g.keys():
+        for y in g[x]:
+            if y > x:
+                continue
+            for z in g[y]:
+                if z > y:
+                    continue
+                if z not in g[x]:
+                    continue
+                if "t" not in (x[0] + y[0] + z[0]):
+                    continue
+                n += 1
     return n
 
 

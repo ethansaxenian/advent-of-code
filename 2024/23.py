@@ -29,15 +29,6 @@ def part1(input: str) -> int:
     return n
 
 
-def is_lan(g, vs):
-    for v in vs:
-        e = g[v] & vs
-        if len(e | {v}) < len(vs) or not e.issubset(vs - {v}):
-            return False
-
-    return True
-
-
 def part2(input: str) -> str:
     G = nx.Graph()
     for line in input.splitlines():

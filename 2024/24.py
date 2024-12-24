@@ -92,6 +92,7 @@ def part2(input: str) -> str:
 
 
 def graphviz(gates):
+    # try engine=dot or engine=fdp
     ands = []
     ors = []
     xors = []
@@ -107,18 +108,6 @@ def graphviz(gates):
             ors.append(c)
 
     print(f"""digraph G {{
-    subgraph x {{
-        edge [style=dotted];
-        {' -> '.join(f'x{i:02}' for i in range(45))};
-    }}
-    subgraph y {{
-        edge [style=dotted];
-        {' -> '.join(f'y{i:02}' for i in range(45))};
-    }}
-    subgraph z {{
-        edge [style=dotted];
-        {' -> '.join(f'z{i:02}' for i in range(45))};
-    }}
     subgraph and {{
         node [style=filled,color=green];
         {'; '.join(ands)};
@@ -130,6 +119,18 @@ def graphviz(gates):
     subgraph xor {{
         node [style=filled,color=red];
         {'; '.join(xors)};
+    }}
+    subgraph x {{
+        edge [style=dotted];
+        {' -> '.join(f'x{i:02}' for i in range(45))};
+    }}
+    subgraph y {{
+        edge [style=dotted];
+        {' -> '.join(f'y{i:02}' for i in range(45))};
+    }}
+    subgraph z {{
+        edge [style=dotted];
+        {' -> '.join(f'z{i:02}' for i in range(45))};
     }}
     {"\n    ".join(edges)}
 }}""")

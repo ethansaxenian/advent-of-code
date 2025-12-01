@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#USAGE arg "<day>"
+#USAGE arg "<file>"
+
+#MISE dir="{{cwd}}"
+
+day=${usage_day?}
+file=${usage_file?}
+
+\vim -u NONE -c "0r input/day${day}.txt" -s "${file}"
+

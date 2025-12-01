@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#USAGE arg "<day>"
+#MISE dir="{{cwd}}"
+
+set -euo pipefail
+
+day=${usage_day?}
+year=${AOC_YEAR}
+cookie=${AOC_COOKIE}
+email=${AOC_EMAIL}
+
+input_file="$(pwd)/input/day${day}.txt"
+
+mkdir -p "$(dirname "${input_file}")"
+
+if [ -e "${input_file}" ]; then exit 0; fi
+
+user_agent="github.com/ethansaxenian/advent-of-code/tree/main/${year} by ${email}"
+
+curl \
+  "https://adventofcode.com/${year}/day/${day}/input" \
+  --cookie "session=${cookie}" \
+  --header "User-Agent: ${user_agent}" \
+  --silent > "${input_file}"
+
+

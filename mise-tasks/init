@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+#USAGE arg "<day>"
+#USAGE flag "-l --language <language>" {
+#USAGE   choices "python" "py"
+#USAGE   default "python"
+#USAGE }
+
+#MISE dir="{{cwd}}"
+
+day=${usage_day?}
+language=${usage_language:-python}
+
+
+function init_python {
+  if [[ -e "${day}.py" ]]; then
+    echo "Day ${day} already exists"
+    exit 0
+  fi
+
+  echo "import util
+
+
+def part1(input: str) -> int:
+    for line in input.splitlines():
+        pass
+
+
+def part2(input: str) -> int:
+    for line in input.splitlines():
+        pass
+
+
+if __name__ == \"__main__\":
+    util.run(${day}, part1, part2)" > "${day}.py"
+}
+
+
+case "$language" in
+  "python" | "py")
+    init_python
+esac

@@ -1,7 +1,6 @@
-import { fetchInput } from "./util";
+import { fetchInput, run } from "./util";
 
-async function part1() {
-  const input = await fetchInput(1);
+async function part1(input: string): Promise<number> {
   const lines = input
     .replace(/R/g, "")
     .replace(/L/g, "-")
@@ -13,16 +12,15 @@ async function part1() {
   for (const rot of lines) {
     d += rot;
     d %= 100;
-    if (d == 0) {
+    if (d === 0) {
       ans++;
     }
   }
 
-  console.log(ans);
+  return ans;
 }
 
-async function part2() {
-  const input = await fetchInput(1);
+async function part2(input: string): Promise<number> {
   const lines = input
     .replace(/R/g, "")
     .replace(/L/g, "-")
@@ -35,14 +33,13 @@ async function part2() {
     for (let i = 0; i < Math.abs(rot); i++) {
       d += rot < 0 ? -1 : 1;
       d %= 100;
-      if (d == 0) {
+      if (d === 0) {
         ans++;
       }
     }
   }
 
-  console.log(ans);
+  return ans;
 }
 
-part1();
-part2();
+run(1, part1, part2);

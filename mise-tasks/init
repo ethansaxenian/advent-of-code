@@ -2,7 +2,7 @@
 
 #USAGE arg "<day>"
 #USAGE flag "-l --language <language>" {
-#USAGE   choices "python" "py"
+#USAGE   choices "python" "py" "typescript" "ts"
 #USAGE   default "python"
 #USAGE }
 
@@ -35,8 +35,29 @@ if __name__ == \"__main__\":
     util.run(${day}, part1, part2)" > "${day}.py"
 }
 
+function init_typescript {
+  if [[ -e "${day}.ts" ]]; then
+    echo "Day ${day} already exists"
+    exit 0
+  fi
+
+  echo "import { fetchInput } from \"./util\";
+
+async function part1() {
+  const input = await fetchInput(${day});
+}
+
+async function part2() {
+  const input = await fetchInput(${day});
+}
+
+part1();
+part2();" > "${day}.ts"
+}
 
 case "$language" in
   "python" | "py")
-    init_python
+    init_python ;;
+  "typescript" | "ts")
+    init_typescript ;;
 esac

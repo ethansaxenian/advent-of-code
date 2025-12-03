@@ -37,9 +37,6 @@ class Args(argparse.Namespace):
     test: bool
 
 
-args = cast(Args, parser.parse_args())
-
-
 def fetch_input(day: int) -> str:
     input_dir = Path(CURR_DIR / "input")
     input_dir.mkdir(exist_ok=True)
@@ -70,6 +67,8 @@ def run(
     part1: Callable[[str], str | int],
     part2: Callable[[str], str | int],
 ):
+    args = cast(Args, parser.parse_args())
+
     if args.test:
         input = sys.stdin.read()
     else:

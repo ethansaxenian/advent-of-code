@@ -68,7 +68,7 @@ export async function run(
   const func = args.part === "1" ? part1 : part2;
 
   const start = process.hrtime.bigint();
-  const answer = await func(input);
+  const answer = await func(input.trim());
   const duration = process.hrtime.bigint() - start;
 
   if (!args.test) {

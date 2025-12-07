@@ -4,26 +4,33 @@ async function part1(input: string): Promise<number> {
   const grid = input.split("\n").map((line) => line.split(""));
 
   let splits = 0;
+
+  let beamIndicies = [grid[0].indexOf("S")];
+
   for (let r = 1; r < grid.length; r++) {
-    const row = grid[r];
-    for (let c = 0; c < row.length; c++) {
+    const nextIndicies = [];
+    for (const c of beamIndicies) {
       if (grid[r - 1][c] === "S" || grid[r - 1][c] === "|") {
         switch (grid[r][c]) {
           case ".":
             grid[r][c] = "|";
+            nextIndicies.push(c);
             break;
           case "^":
             if (grid[r][c - 1] == ".") {
               grid[r][c - 1] = "|";
+              nextIndicies.push(c - 1);
             }
             if (grid[r][c + 1] == ".") {
               grid[r][c + 1] = "|";
+              nextIndicies.push(c + 1);
             }
             splits += 1;
             break;
         }
       }
     }
+    beamIndicies = nextIndicies;
   }
   return splits;
 }

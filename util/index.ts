@@ -1,28 +1,27 @@
-import { parseArgs } from "util";
+import { parseArgs } from "node:util";
 import { execSync } from "child_process";
 import { readFile, writeFile } from "fs/promises";
+import path from "path";
 
 const AOC_EMAIL = process.env.AOC_EMAIL!;
 const AOC_COOKIE = process.env.AOC_COOKIE!;
-const AOC_YEAR = process.env.AOC_YEAR!;
 
-export async function fetchInput(day: number): Promise<string> {
-  const inputFile = `${__dirname}/input/day${day}.txt`;
+const PROJECT_ROOT = path.dirname(__dirname);
+
+export async function fetchInput(day: number, year: number): Promise<string> {
+  const inputFile = `${PROJECT_ROOT}/${year}/input/day${day}.txt`;
 
   try {
     const text = await readFile(inputFile, "utf8");
     return text.trim();
   } catch (err: any) {}
 
-  const res = await fetch(
-    `https://adventofcode.com/${AOC_YEAR}/day/${day}/input`,
-    {
-      headers: new Headers({
-        Cookie: `session=${AOC_COOKIE}`,
-        "User-Agent": `github.com/ethansaxenian/advent-of-code/tree/main/${AOC_YEAR} by ${AOC_EMAIL}`,
-      }),
-    },
-  );
+  const res = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, {
+    headers: new Headers({
+      Cookie: `session=${AOC_COOKIE}`,
+      "User-Agent": `github.com/ethansaxenian/advent-of-code/tree/main/${year} by ${AOC_EMAIL}`,
+    }),
+  });
 
   const text = await res.text();
 
@@ -56,6 +55,7 @@ function parseArguments() {
 
 export async function run(
   day: number,
+  year: number,
   part1: (input: string) => Promise<string | number>,
   part2: (input: string) => Promise<string | number>,
 ): Promise<void> {
@@ -63,7 +63,7 @@ export async function run(
 
   const input = await (args.test
     ? readFile("/dev/stdin", "utf-8")
-    : fetchInput(day));
+    : fetchInput(day, year));
 
   const func = args.part === "1" ? part1 : part2;
 

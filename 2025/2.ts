@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 async function part1(input: string): Promise<number> {
   const pattern = /^(.+)\1$/;
@@ -36,4 +36,4 @@ async function part2(input: string): Promise<number> {
   return s;
 }
 
-run(2, part1, part2);
+run(2, 2025, part1, part2);

@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+# [USAGE] arg "<file>"
+
+import os
+import subprocess
+from pathlib import PurePath
+
+file = PurePath(os.environ["usage_file"])
+
+language = file.suffix[1:]
+
+match language:
+    case "py" | "ts":
+        year = file.parent
+        day = file.stem
+    case _:
+        raise ValueError("unsupported language")
+
+
+match language:
+    case "py":
+        subprocess.run(["uv", "run", "-m", f"{year}.{day}"])
+    case "ts":
+        subprocess.run(["npx", "tsx", file])

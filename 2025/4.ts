@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 const directions = [
   [-1, 0],
@@ -77,4 +77,4 @@ async function part2(input: string): Promise<number> {
   return total;
 }
 
-run(4, part1, part2);
+run(4, 2025, part1, part2);

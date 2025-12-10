@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 async function part1(input: string): Promise<number> {
   const parts = input.split("\n\n");
@@ -37,4 +37,4 @@ async function part2(input: string): Promise<number> {
   return n;
 }
 
-run(5, part1, part2);
+run(5, 2025, part1, part2);

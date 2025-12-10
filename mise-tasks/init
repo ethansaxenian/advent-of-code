@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 
+#USAGE arg "<year>"
 #USAGE arg "<day>"
 #USAGE flag "-l --language <language>" {
 #USAGE   choices "python" "py" "typescript" "ts"
 #USAGE   default "python"
 #USAGE }
 
-#MISE dir="{{cwd}}"
-
 day=${usage_day?}
+year=${usage_year?}
 language=${usage_language:-python}
 
 
 function init_python {
-  if [[ -e "${day}.py" ]]; then
+  file="${year}/${day}.py"
+  if [[ -e $file ]]; then
     echo "Day ${day} already exists"
     exit 0
   fi
@@ -32,11 +33,12 @@ def part2(input: str) -> int:
 
 
 if __name__ == \"__main__\":
-    util.run(${day}, part1, part2)" > "${day}.py"
+    util.run(${day}, ${year}, part1, part2)" > "$file"
 }
 
 function init_typescript {
-  if [[ -e "${day}.ts" ]]; then
+  file="${year}/${day}.ts"
+  if [[ -e $file ]]; then
     echo "Day ${day} already exists"
     exit 0
   fi
@@ -51,7 +53,7 @@ async function part2(input: string): Promise<number> {
   return 0
 }
 
-run(${day}, part1, part2);" > "${day}.ts"
+run(${day}, part1, part2);" > "$file"
 }
 
 case "$language" in

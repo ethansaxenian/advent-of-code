@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 function joltage(battery: number[], size: number): number {
   if (size === 0) {
@@ -32,4 +32,4 @@ async function part2(input: string): Promise<number> {
   return j;
 }
 
-run(3, part1, part2);
+run(3, 2025, part1, part2);

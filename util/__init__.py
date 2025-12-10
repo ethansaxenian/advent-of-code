@@ -10,9 +10,8 @@ from typing import Literal, cast
 
 AOC_EMAIL = os.environ["AOC_EMAIL"]
 AOC_COOKIE = os.environ["AOC_COOKIE"]
-AOC_YEAR = os.environ["AOC_YEAR"]
 
-CURR_DIR = PurePath(__file__).parent
+PROJECT_ROOT = PurePath(__file__).parent.parent
 
 parser = argparse.ArgumentParser()
 
@@ -37,8 +36,8 @@ class Args(argparse.Namespace):
     test: bool
 
 
-def fetch_input(day: int) -> str:
-    input_dir = Path(CURR_DIR / "input")
+def fetch_input(day: int, year: int) -> str:
+    input_dir = Path(PROJECT_ROOT / str(year) / "input")
     input_dir.mkdir(exist_ok=True)
 
     input_path = Path(input_dir / f"day{day}.txt")
@@ -46,12 +45,12 @@ def fetch_input(day: int) -> str:
         return input_path.read_text().strip()
 
     req = urllib.request.Request(
-        f"https://adventofcode.com/{AOC_YEAR}/day/{day}/input",
+        f"https://adventofcode.com/{year}/day/{day}/input",
     )
     req.add_header("Cookie", f"session={AOC_COOKIE}")
     req.add_header(
         "User-Agent",
-        f"github.com/ethansaxenian/advent-of-code/tree/main/{AOC_YEAR} by {AOC_EMAIL}",
+        f"github.com/ethansaxenian/advent-of-code/tree/main/{year} by {AOC_EMAIL}",
     )
 
     with urllib.request.urlopen(req) as response:
@@ -64,6 +63,7 @@ def fetch_input(day: int) -> str:
 
 def run(
     day: int,
+    year: int,
     part1: Callable[[str], str | int],
     part2: Callable[[str], str | int],
 ):
@@ -72,7 +72,7 @@ def run(
     if args.test:
         input = sys.stdin.read()
     else:
-        input = fetch_input(day)
+        input = fetch_input(day, year)
 
     match args.part:
         case 1:

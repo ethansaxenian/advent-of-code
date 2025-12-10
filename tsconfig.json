@@ -4,6 +4,14 @@
     "module": "CommonJS",
     "esModuleInterop": true,
     "strict": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@util": [
+        "./util/index.ts"
+      ]
+    }
   }
 }

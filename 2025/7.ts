@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 async function part1(input: string): Promise<number> {
   const grid = input.split("\n").map((line) => line.split(""));
@@ -69,4 +69,4 @@ async function part2(input: string): Promise<number> {
   return dfs(1, grid[0].indexOf("S"));
 }
 
-run(7, part1, part2);
+run(7, 2025, part1, part2);

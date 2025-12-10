@@ -1,4 +1,4 @@
-import { run } from "./util";
+import { run } from "@util";
 
 async function part1(input: string): Promise<number> {
   const lines = input.split("\n");
@@ -97,4 +97,4 @@ async function part2(input: string): Promise<number> {
   return total + currTotal;
 }
 
-run(6, part1, part2);
+run(6, 2025, part1, part2);

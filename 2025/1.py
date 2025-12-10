@@ -38,4 +38,4 @@ def part2(input: str) -> int:
 
 
 if __name__ == "__main__":
-    util.run(1, part1, part2)
+    util.run(1, 2025, part1, part2)

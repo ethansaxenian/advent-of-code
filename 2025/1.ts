@@ -1,4 +1,4 @@
-import { fetchInput, run } from "./util";
+import { run } from "@util";
 
 async function part1(input: string): Promise<number> {
   const lines = input
@@ -42,4 +42,4 @@ async function part2(input: string): Promise<number> {
   return ans;
 }
 
-run(1, part1, part2);
+run(1, 2025, part1, part2);
